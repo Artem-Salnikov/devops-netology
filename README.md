@@ -18,4 +18,6 @@
 `# !example_override.tf`
 * конфигурационные файлы с расширением .terraformrc и файлы terraform.rc  
 `.terraformrc, terraform.rc`
+
+changes from pycharm 1
   
