@@ -19,5 +19,6 @@
 * конфигурационные файлы с расширением .terraformrc и файлы terraform.rc  
 `.terraformrc, terraform.rc`
 
-changes from pycharm 1
+changes from pycharm 1  
+changes from pycharm 2
   
