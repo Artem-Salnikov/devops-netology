@@ -11,3 +11,4 @@ third line
 файлы с расширением .tfvars
 файлы вида override.tf, override.tf.json, *_override.tf, *_override.tf.json
 конфигурационные файлы с расширением .terraformrc и файлы terraform.rc
+...
