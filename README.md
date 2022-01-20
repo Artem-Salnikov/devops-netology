@@ -252,13 +252,8 @@ Part of the utsname information is also accessible via /proc/sys/kernel/{ostype,
 && - логическое И. Вторая команда выполнится только, если первая команда выполнится успешно и вернет 0.
 ; - просто выполняет несколько команд друг за другом.
 
-Похоже смысла использовать && в bash нет, команды ниже показали это.
-asalnikov@vagrant:~$ ls qq
-ls: cannot access 'qq': No such file or directory
-asalnikov@vagrant:~$ set -e ; ls qq && echo test
-ls: cannot access 'qq': No such file or directory
-asalnikov@vagrant:~$ ls qq && echo test
-ls: cannot access 'qq': No such file or directory
+Если в скрипте присутствует set -e, то выполнение скрипта из-за ошибки может завершиться раньше чем дело дойдет до строки с &&.
+Значит смысл использовать есть.
 ```
 8. Из каких опций состоит режим bash set -euxo pipefail и почему его хорошо было бы использовать в сценариях?
 ```
