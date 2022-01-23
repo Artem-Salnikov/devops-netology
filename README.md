@@ -285,3 +285,112 @@ asalnikov@vagrant:~$ ps axo stat | sort | uniq -c
       1 STAT
      11 T
 ```
+
+**Домашнее задание к занятию "3.4. Операционные системы, лекция 2"**  
+
+1. На лекции мы познакомились с node_exporter. В демонстрации его исполняемый файл запускался в background. Этого достаточно для демо, но не для настоящей production-системы, где процессы должны находиться под внешним управлением. Используя знания из лекции по systemd, создайте самостоятельно простой unit-файл для node_exporter:
+
+* поместите его в автозагрузку,
+* предусмотрите возможность добавления опций к запускаемому процессу через внешний файл (посмотрите, например, на systemctl cat cron),
+* удостоверьтесь, что с помощью systemctl процесс корректно стартует, завершается, а после перезагрузки автоматически поднимается.
+```
+unit-файл:
+[Unit]
+Description=node_exporter
+
+[Service]
+ExecStart=/home/asalnikov/node_exporter-1.3.1.linux-amd64/./node_exporter $OPT
+EnvironmentFile=-/etc/default/node_exporter
+
+[Install]
+WantedBy=multi-user.target
+
+Добавил опцию --collector.network_route через внешний файл.
+asalnikov@vagrant:~/node_exporter-1.3.1.linux-amd64$ cat /etc/default/node_exporter
+OPT="--collector.network_route"
+
+Процесс успешно стартует после перезагрузки и управляется через systemctl.
+asalnikov@vagrant:~/node_exporter-1.3.1.linux-amd64$ ps -e | grep node_exporter
+    649 ?        00:00:00 node_exporter
+asalnikov@vagrant:~/node_exporter-1.3.1.linux-amd64$ systemctl stop node_exporter
+==== AUTHENTICATING FOR org.freedesktop.systemd1.manage-units ===
+Authentication is required to stop 'node_exporter.service'.
+Multiple identities can be used for authentication:
+ 1.  vagrant
+ 2.  Salnikov Artem,,, (asalnikov)
+Choose identity to authenticate as (1-2): 2
+Password:
+==== AUTHENTICATION COMPLETE ===
+asalnikov@vagrant:~/node_exporter-1.3.1.linux-amd64$ ps -e | grep node_exporter
+asalnikov@vagrant:~/node_exporter-1.3.1.linux-amd64$
+```
+2. Ознакомьтесь с опциями node_exporter и выводом /metrics по-умолчанию. Приведите несколько опций, которые вы бы выбрали для базового мониторинга хоста по CPU, памяти, диску и сети.  
+```
+CPU:
+node_cpu_seconds_total{cpu="0",mode="idle"} 775.41
+node_cpu_seconds_total{cpu="0",mode="iowait"} 10.74
+node_cpu_seconds_total{cpu="0",mode="system"} 8.06
+
+memory:
+node_memory_MemTotal_bytes 4.127342592e+09
+node_memory_Cached_bytes 5.28723968e+08
+node_memory_Buffers_bytes 5.0151424e+07
+
+disk:
+node_filesystem_size_bytes{device="/dev/sda2",fstype="ext4",mountpoint="/boot"} 1.02330368e+09
+node_filesystem_free_bytes{device="/dev/sda2",fstype="ext4",mountpoint="/boot"} 9.12084992e+08
+node_disk_read_bytes_total{device="sda"} 4.84661248e+08
+node_disk_written_bytes_total{device="sda"} 2.740224e+07
+
+network:
+node_network_receive_bytes_total{device="eth0"} 1.548348e+06
+node_network_transmit_bytes_total{device="eth0"} 219806
+```
+3. Установите в свою виртуальную машину Netdata. Воспользуйтесь готовыми пакетами для установки (sudo apt install -y netdata). После успешной установки:
+После успешной перезагрузки в браузере на своем ПК (не в виртуальной машине) вы должны суметь зайти на localhost:19999
+```
+Установил ПО Netdata, успешно получил на своем ПК вывод метрик ВМ.
+![img.png](img.png)
+```
+4. Можно ли по выводу dmesg понять, осознает ли ОС, что загружена не на настоящем оборудовании, а на системе виртуализации?
+```
+asalnikov@vagrant:~$ dmesg | grep virt
+[    0.003436] CPU MTRRs all blank - virtualized system.
+```
+5. Как настроен sysctl fs.nr_open на системе по-умолчанию? Узнайте, что означает этот параметр. Какой другой существующий лимит не позволит достичь такого числа (ulimit --help)?
+```
+sysctl fs.nr_open выводит максимальное количество дескрипторов файлов, которые может выделить процесс. Значение по умолчанию 1024*1024=1048576, считается, что такого значения должно хватать по умолчанию для большинства машин.
+Такого числа не позволит достигнуть софт лимит равный 1024, поменять можно c помощью редактирования файла /etc/security/limits.conf, добавить строку asalnikov soft nofile 1048576 
+```
+6. Запустите любой долгоживущий процесс (не ls, который отработает мгновенно, а, например, sleep 1h) в отдельном неймспейсе процессов; покажите, что ваш процесс работает под PID 1 через nsenter. Для простоты работайте в данном задании под root (sudo -i). Под обычным пользователем требуются дополнительные опции (--map-root-user) и т.д.
+```
+asalnikov@vagrant:~$ sudo -i
+root@vagrant:~# unshare -f --pid --mount-proc sleep 2h &
+[1] 1754
+root@vagrant:~# ps aux | grep sleep
+root        1754  0.0  0.0   5480   532 pts/0    S    21:10   0:00 unshare -f --pid --mount-proc sleep 2h
+root        1755  0.0  0.0   5476   528 pts/0    S    21:10   0:00 sleep 2h
+root        1758  0.0  0.0   6432   740 pts/0    S+   21:10   0:00 grep --color=auto sleep
+root@vagrant:~# nsenter --target 1755 --pid --mount
+root@vagrant:/# ps aux
+USER         PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+root           1  0.0  0.0   5476   528 pts/0    S    21:10   0:00 sleep 2h
+root           2  0.0  0.1   7236  4164 pts/0    S    21:11   0:00 -bash
+root          13  0.0  0.0   8892  3380 pts/0    R+   21:11   0:00 ps aux
+```
+7. Найдите информацию о том, что такое :(){ :|:& };:. Запустите эту команду в своей виртуальной машине Vagrant с Ubuntu 20.04 (это важно, поведение в других ОС не проверялось). Некоторое время все будет "плохо", после чего (минуты) – ОС должна стабилизироваться. Вызов dmesg расскажет, какой механизм помог автоматической стабилизации. Как настроен этот механизм по-умолчанию, и как изменить число процессов, которое можно создать в сессии?  
+```
+:(){ :|:& };: - является логической или форк бомбой, которая порождает большое количество рекурсивных процессов и старается заполнить свободные ресурсы.
+Судя по выводу dmesg прекратить выполнение помог cgroup, данный механизм похоже прекращает выполнение процессов после достижения определенного числа процессов запущенных одновременно в сессии.
+Лимит можно посмотреть в выводе:
+asalnikov@vagrant:~$ systemctl status user-1001.slice
+● user-1001.slice - User Slice of UID 1001
+     Loaded: loaded
+    Drop-In: /usr/lib/systemd/system/user-.slice.d
+             └─10-defaults.conf
+     Active: active since Sun 2022-01-23 20:43:17 UTC; 51min ago
+       Docs: man:user@.service(5)
+      Tasks: 9 (limit: 10158)
+Изменить лимит можно отредактировав файл /usr/lib/systemd/system/user-.slice.d/10-defaults.conf.
+
+```
