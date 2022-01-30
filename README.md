@@ -352,7 +352,7 @@ node_network_transmit_bytes_total{device="eth0"} 219806
 Установил ПО Netdata, успешно получил на своем ПК вывод метрик ВМ.
 ```
 
-![Netdata](/devops-netology/Img/Netdata.png)   
+![Netdata](/Img/Netdata.png)   
 
 4. Можно ли по выводу dmesg понять, осознает ли ОС, что загружена не на настоящем оборудовании, а на системе виртуализации?
 ```
