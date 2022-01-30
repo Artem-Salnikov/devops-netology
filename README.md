@@ -1,6 +1,6 @@
 # devops-netology
 **Домашнее задание к занятию «2.1. Системы контроля версий.»**  
-
+<details><summary></summary>
 В будущем благодаря добавленному файлу .gitignore в директории Terraform при использовании команды commit внутри директории terraform, будут игнорироваться файлы и директории перечисленные в .gitignore.  
 Какие файлы и директории будут игнорироваться согласно настройкам */Terraform/.gitignore:  
   
@@ -18,10 +18,12 @@
 `# !example_override.tf`
 * конфигурационные файлы с расширением .terraformrc и файлы terraform.rc  
 `.terraformrc, terraform.rc`   
-  
+</details>  
 
   **Домашнее задание к занятию «2.4. Инструменты Git»**  
-1. **git show aefea**  
+<details><summary></summary>
+
+1. **git show aefea**
 aefead2207ef7e2aa5dc81a34aedf0cad4c32545
 Update CHANGELOG.md
 2. **git show 85024d3**  
@@ -53,9 +55,13 @@ dd01a3507 Update CHANGELOG.md
 8364383c3 Push plugin discovery down into command package 
 7. **git log -S 'synchronizedWriters'**  
 Нашел коммиты, когда данное выражение было добавлено или удалено  
-Author: Martin Atkins <mart@degeneration.co.uk>    
+Author: Martin Atkins <mart@degeneration.co.uk>      
+
+</details>  
 
 **Домашнее задание к занятию "3.1. Работа в терминале, лекция 1"**
+<details><summary></summary>
+
 1. Как добавить оперативной памяти или ресурсов процессора виртуальной машине?
 Отредактировать файл Vagrantfile:
 ``` 
@@ -94,8 +100,10 @@ PATH=/tmp/new_path_directory/:$PATH
 At выполняет команду в определенное время
 Batch выполняет задание, если позволяет уровень загрузки ОС, задания по умолчанию выполняются, если загрузка ОС ниже 1.5.
 ```
+</details>  
 
 **Домашнее задание к занятию "3.1. Работа в терминале, лекция 2"**
+<details><summary></summary>
 
 1. Какого типа команда cd? Попробуйте объяснить, почему она именно такого типа; опишите ход своих мыслей, если считаете что она могла бы быть другого типа.  
 ```
@@ -190,8 +198,11 @@ reptyr 4293
 Команда tee принимает стандартный stdin и выводит его в стандартный stdout, и в один или несколько файлов.
 Команда echo string | sudo tee /root/new_file будет работать т.к., перенаправление в файл будет выполняться от имени суперпользователя с помощью команды sudo tee.
 ```
+</details>  
 
 **Домашнее задание к занятию "3.3. Операционные системы, лекция 1"**
+<details><summary></summary>
+
 1. Какой системный вызов делает команда cd?
 ```
 chdir("/tmp") = 0
@@ -285,8 +296,10 @@ asalnikov@vagrant:~$ ps axo stat | sort | uniq -c
       1 STAT
      11 T
 ```
+</details>  
 
-**Домашнее задание к занятию "3.4. Операционные системы, лекция 2"**  
+**Домашнее задание к занятию "3.4. Операционные системы, лекция 2"** 
+<details><summary></summary>
 
 1. На лекции мы познакомились с node_exporter. В демонстрации его исполняемый файл запускался в background. Этого достаточно для демо, но не для настоящей production-системы, где процессы должны находиться под внешним управлением. Используя знания из лекции по systemd, создайте самостоятельно простой unit-файл для node_exporter:
 
@@ -395,5 +408,254 @@ asalnikov@vagrant:~$ systemctl status user-1001.slice
        Docs: man:user@.service(5)
       Tasks: 9 (limit: 10158)
 Изменить лимит можно отредактировав файл /usr/lib/systemd/system/user-.slice.d/10-defaults.conf.
-
 ```
+</details>  
+
+**Домашнее задание к занятию "3.5. Файловые системы"**
+<details><summary></summary>
+
+1. Узнайте о sparse (разряженных) файлах.
+```
+Файл, где последовательность нулевых байтов не записана на диск, а информация об этой дыре хранится в блоке метаданных файловой системы.
+```
+2. Могут ли файлы, являющиеся жесткой ссылкой на один объект, иметь разные права доступа и владельца? Почему?
+```
+Не могут, т.к. имеют такую же inode, набор разрешений и владельца, как и файл на который они ссылаются.
+```
+3. Сделайте vagrant destroy на имеющийся инстанс Ubuntu. Замените содержимое Vagrantfile следующим:
+```
+Vagrant.configure("2") do |config|
+  config.vm.box = "bento/ubuntu-20.04"
+  config.vm.provider :virtualbox do |vb|
+    lvm_experiments_disk0_path = "/tmp/lvm_experiments_disk0.vmdk"
+    lvm_experiments_disk1_path = "/tmp/lvm_experiments_disk1.vmdk"
+    vb.customize ['createmedium', '--filename', lvm_experiments_disk0_path, '--size', 2560]
+    vb.customize ['createmedium', '--filename', lvm_experiments_disk1_path, '--size', 2560]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', lvm_experiments_disk0_path]
+    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 2, '--device', 0, '--type', 'hdd', '--medium', lvm_experiments_disk1_path]
+  end
+end
+```
+Данная конфигурация создаст новую виртуальную машину с двумя дополнительными неразмеченными дисками по 2.5 Гб.
+```
+Результатом выполнения стала чистая ВМ с ubuntu и двумя дополнительными дисками по 2.5Гб.
+sda                         8:0    0   64G  0 disk
+├─sda1                      8:1    0    1M  0 part
+├─sda2                      8:2    0    1G  0 part /boot
+└─sda3                      8:3    0   63G  0 part
+  └─ubuntu--vg-ubuntu--lv 253:0    0 31.5G  0 lvm  /
+sdb                         8:16   0  2.5G  0 disk
+sdc                         8:32   0  2.5G  0 disk
+```
+4. Используя fdisk, разбейте первый диск на 2 раздела: 2 Гб, оставшееся пространство.
+```
+vagrant@vagrant:/$ sudo fdisk /dev/sdb
+
+Command (m for help): n
+Partition number (1-128, default 1): 1
+First sector (2048-5242846, default 2048): 2048
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (2048-5242846, default 5242846): +2G
+Created a new partition 1 of type 'Linux filesystem' and of size 2 GiB.
+
+Command (m for help): n
+Partition number (2-128, default 2): 2
+First sector (4196352-5242846, default 4196352):
+Last sector, +/-sectors or +/-size{K,M,G,T,P} (4196352-5242846, default 5242846):
+Created a new partition 2 of type 'Linux filesystem' and of size 511 MiB.
+
+sdb                         8:16   0  2.5G  0 disk
+├─sdb1                      8:17   0    2G  0 part
+└─sdb2                      8:18   0  511M  0 part
+```
+5. Используя sfdisk, перенесите данную таблицу разделов на второй диск.
+```
+vagrant@vagrant:~$ sudo sfdisk -d /dev/sdb > sdb_part
+vagrant@vagrant:~$ sudo sfdisk /dev/sdc < sdb_part
+Checking that no-one is using this disk right now ... OK
+
+sdb                         8:16   0  2.5G  0 disk
+├─sdb1                      8:17   0    2G  0 part
+└─sdb2                      8:18   0  511M  0 part
+sdc                         8:32   0  2.5G  0 disk
+├─sdc1                      8:33   0    2G  0 part
+└─sdc2                      8:34   0  511M  0 part
+```
+6. Соберите mdadm RAID1 на паре разделов 2 Гб.
+```
+vagrant@vagrant:~$ sudo mdadm --create /dev/md0 --level=1 --raid-devices=2 /dev/sdb1 /dev/sdc1
+
+sdb                         8:16   0  2.5G  0 disk
+├─sdb1                      8:17   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+└─sdb2                      8:18   0  511M  0 part
+sdc                         8:32   0  2.5G  0 disk
+├─sdc1                      8:33   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+└─sdc2                      8:34   0  511M  0 part
+```
+7. Соберите mdadm RAID0 на второй паре маленьких разделов.
+```
+vagrant@vagrant:~$ sudo mdadm --create /dev/md1 --level=0 --raid-devices=2 /dev/sdb2 /dev/sdc2
+
+sdb                         8:16   0  2.5G  0 disk
+├─sdb1                      8:17   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+└─sdb2                      8:18   0  511M  0 part
+  └─md1                     9:1    0 1017M  0 raid0
+sdc                         8:32   0  2.5G  0 disk
+├─sdc1                      8:33   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+└─sdc2                      8:34   0  511M  0 part
+  └─md1                     9:1    0 1017M  0 raid0
+```
+8. Создайте 2 независимых PV на получившихся md-устройствах.
+```
+vagrant@vagrant:~$ sudo pvcreate /dev/md0
+  Physical volume "/dev/md0" successfully created.
+vagrant@vagrant:~$ sudo pvcreate /dev/md1
+  Physical volume "/dev/md1" successfully created.
+  
+  vagrant@vagrant:~$ sudo pvs
+  PV         VG        Fmt  Attr PSize    PFree
+  /dev/md0             lvm2 ---    <2.00g   <2.00g
+  /dev/md1             lvm2 ---  1017.00m 1017.00m
+  /dev/sda3  ubuntu-vg lvm2 a--   <63.00g  <31.50g
+```
+9. Создайте общую volume-group на этих двух PV.
+```
+vagrant@vagrant:~$ sudo vgcreate vg01 /dev/md0 /dev/md1
+  Volume group "vg01" successfully created
+  
+vagrant@vagrant:~$ sudo vgs
+  VG        #PV #LV #SN Attr   VSize   VFree
+  ubuntu-vg   1   1   0 wz--n- <63.00g <31.50g
+  vg01        2   0   0 wz--n-  <2.99g  <2.99g  
+  ```
+10. Создайте LV размером 100 Мб, указав его расположение на PV с RAID0.
+```
+vagrant@vagrant:~$ sudo lvcreate -L 100M -n lv01 vg01 /dev/md1
+
+vagrant@vagrant:~$ sudo lvs
+  LV        VG        Attr       LSize   Pool Origin Data%  Meta%  Move Log Cpy%Sync Convert
+  ubuntu-lv ubuntu-vg -wi-ao----  31.50g
+  lv01      vg01      -wi-a----- 100.00m
+```
+11. Создайте mkfs.ext4 ФС на получившемся LV.
+```
+sdb
+├─sdb1                    linux_raid_member vagrant:0 db641fc9-1eb8-6dc7-4b9b-6f55ffa9e149
+│ └─md0                   LVM2_member                 fY3oDg-z6q3-fmYm-3TFQ-E9KW-ZuJu-kkJiyC
+└─sdb2                    linux_raid_member vagrant:1 ce1049d6-425f-e3c6-c20e-d73e51797cc0
+  └─md1                   LVM2_member                 P3PaAV-MwnD-6yXM-ecQT-CG7X-H0N8-e2WJM0
+    └─vg01-lv01           ext4                        f31c4e31-d57d-41a1-9123-be255790610f
+sdc
+├─sdc1                    linux_raid_member vagrant:0 db641fc9-1eb8-6dc7-4b9b-6f55ffa9e149
+│ └─md0                   LVM2_member                 fY3oDg-z6q3-fmYm-3TFQ-E9KW-ZuJu-kkJiyC
+└─sdc2                    linux_raid_member vagrant:1 ce1049d6-425f-e3c6-c20e-d73e51797cc0
+  └─md1                   LVM2_member                 P3PaAV-MwnD-6yXM-ecQT-CG7X-H0N8-e2WJM0
+    └─vg01-lv01           ext4                        f31c4e31-d57d-41a1-9123-be255790610f
+```
+12. Смонтируйте этот раздел в любую директорию, например, /tmp/new.
+```
+vagrant@vagrant:~$ sudo mount /dev/vg01/lv01 /tmp/new
+
+vagrant@vagrant:~$ df -hT
+/dev/mapper/vg01-lv01             ext4       93M   72K   86M   1% /tmp/new
+```
+13. Поместите туда тестовый файл, например wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /tmp/new/test.gz.
+```
+vagrant@vagrant:~$ sudo wget https://mirror.yandex.ru/ubuntu/ls-lR.gz -O /tmp/new/test.gz
+--2022-01-30 16:21:49--  https://mirror.yandex.ru/ubuntu/ls-lR.gz
+Resolving mirror.yandex.ru (mirror.yandex.ru)... 213.180.204.183, 2a02:6b8::183
+Connecting to mirror.yandex.ru (mirror.yandex.ru)|213.180.204.183|:443... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 21991896 (21M) [application/octet-stream]
+Saving to: ‘/tmp/new/test.gz’
+
+/tmp/new/test.gz                       100%[=========================================================================>]  20.97M  6.70MB/s    in 3.1s
+
+2022-01-30 16:21:52 (6.70 MB/s) - ‘/tmp/new/test.gz’ saved [21991896/21991896]
+```
+14. Прикрепите вывод lsblk.
+```
+vagrant@vagrant:~$ sudo lsblk
+NAME                      MAJ:MIN RM  SIZE RO TYPE  MOUNTPOINT
+loop0                       7:0    0 32.3M  1 loop  /snap/snapd/12704
+loop1                       7:1    0 55.4M  1 loop  /snap/core18/2128
+loop2                       7:2    0 70.3M  1 loop  /snap/lxd/21029
+loop3                       7:3    0 43.4M  1 loop  /snap/snapd/14549
+loop4                       7:4    0 55.5M  1 loop  /snap/core18/2284
+loop5                       7:5    0 61.9M  1 loop  /snap/core20/1328
+loop6                       7:6    0 67.2M  1 loop  /snap/lxd/21835
+sda                         8:0    0   64G  0 disk
+├─sda1                      8:1    0    1M  0 part
+├─sda2                      8:2    0    1G  0 part  /boot
+└─sda3                      8:3    0   63G  0 part
+  └─ubuntu--vg-ubuntu--lv 253:0    0 31.5G  0 lvm   /
+sdb                         8:16   0  2.5G  0 disk
+├─sdb1                      8:17   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+└─sdb2                      8:18   0  511M  0 part
+  └─md1                     9:1    0 1017M  0 raid0
+    └─vg01-lv01           253:1    0  100M  0 lvm   /tmp/new
+sdc                         8:32   0  2.5G  0 disk
+├─sdc1                      8:33   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+└─sdc2                      8:34   0  511M  0 part
+  └─md1                     9:1    0 1017M  0 raid0
+    └─vg01-lv01           253:1    0  100M  0 lvm   /tmp/new
+```
+15. Протестируйте целостность файла:
+```
+root@vagrant:~# gzip -t /tmp/new/test.gz
+root@vagrant:~# echo $?
+0
+```
+```
+Успех.
+```
+16. Используя pvmove, переместите содержимое PV с RAID0 на RAID1.
+```
+vagrant@vagrant:~$ sudo pvmove /dev/md1 /dev/md0
+
+sdb                         8:16   0  2.5G  0 disk
+├─sdb1                      8:17   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+│   └─vg01-lv01           253:1    0  100M  0 lvm   /tmp/new
+└─sdb2                      8:18   0  511M  0 part
+  └─md1                     9:1    0 1017M  0 raid0
+sdc                         8:32   0  2.5G  0 disk
+├─sdc1                      8:33   0    2G  0 part
+│ └─md0                     9:0    0    2G  0 raid1
+│   └─vg01-lv01           253:1    0  100M  0 lvm   /tmp/new
+└─sdc2                      8:34   0  511M  0 part
+  └─md1                     9:1    0 1017M  0 raid0
+```
+17. Сделайте --fail на устройство в вашем RAID1 md.
+```
+vagrant@vagrant:~$ sudo mdadm --fail /dev/md0 /dev/sdb1
+mdadm: set /dev/sdb1 faulty in /dev/md0
+```
+18. Подтвердите выводом dmesg, что RAID1 работает в деградированном состоянии.
+```
+vagrant@vagrant:~$ dmesg | grep md0
+[10124.595959] md/raid1:md0: Disk failure on sdb1, disabling device.
+               md/raid1:md0: Operation continuing on 1 devices.
+```
+19. Протестируйте целостность файла, несмотря на "сбойный" диск он должен продолжать быть доступен:
+```
+root@vagrant:~# gzip -t /tmp/new/test.gz
+root@vagrant:~# echo $?
+0
+```
+```
+С файлом все хорошо, т.к. в RAID1 при сбое одного диска у нас остается второй живой диск с идентичными данными.
+```
+20. Погасите тестовый хост, vagrant destroy.
+```
+C:\Users\Admin\Documents\Vagrant>vagrant destroy
+    default: Are you sure you want to destroy the 'default' VM? [y/N] y
+==> default: Forcing shutdown of VM...
+==> default: Destroying VM and associated drives...
+```
+</details>
