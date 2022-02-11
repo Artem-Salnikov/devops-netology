@@ -659,3 +659,149 @@ C:\Users\Admin\Documents\Vagrant>vagrant destroy
 ==> default: Destroying VM and associated drives...
 ```
 </details>
+
+**Домашнее задание к занятию "3.6. Компьютерные сети, лекция 1**
+<details><summary></summary>
+
+1. Работа c HTTP через телнет.
+* Подключитесь утилитой телнет к сайту stackoverflow.com telnet stackoverflow.com 80
+* отправьте HTTP запрос  
+```
+GET /questions HTTP/1.0
+HOST: stackoverflow.com
+[press enter]
+[press enter]
+```
+В ответе укажите полученный HTTP код, что он означает?
+```
+vagrant@vagrant:~$ telnet stackoverflow.com 80
+Trying 151.101.129.69...
+Connected to stackoverflow.com.
+Escape character is '^]'.
+GET /questions HTTP/1.0
+HOST: stackoverflow.com
+
+HTTP/1.1 301 Moved Permanently
+cache-control: no-cache, no-store, must-revalidate
+location: https://stackoverflow.com/questions
+x-request-guid: 764585d4-38a8-4989-9d5e-13841779c6c5
+feature-policy: microphone 'none'; speaker 'none'
+content-security-policy: upgrade-insecure-requests; frame-ancestors 'self' https://stackexchange.com
+Accept-Ranges: bytes
+Date: Fri, 11 Feb 2022 12:15:10 GMT
+Via: 1.1 varnish
+Connection: close
+X-Served-By: cache-fra19182-FRA
+X-Cache: MISS
+X-Cache-Hits: 0
+X-Timer: S1644581710.330040,VS0,VE85
+Vary: Fastly-SSL
+X-DNS-Prefetch-Control: off
+Set-Cookie: prov=8ae2cc24-027b-eebc-9eb9-40c30a2dc14e; domain=.stackoverflow.com; expires=Fri, 01-Jan-2055 00:00:00 GMT; path=/; HttpOnly
+
+Полученный код показывает, что есть постоянный редирект с HTTP на HTTPS.
+```
+2. Повторите задание 1 в браузере, используя консоль разработчика F12.
+* откройте вкладку Network
+* отправьте запрос http://stackoverflow.com
+* найдите первый ответ HTTP сервера, откройте вкладку Headers
+* укажите в ответе полученный HTTP код.
+* проверьте время загрузки страницы, какой запрос обрабатывался дольше всего?
+* приложите скриншот консоли браузера в ответ.
+
+`Получен код 307 - временный редирект на https.`  
+![http](/Img/lan1.png)   
+
+`Дольше всего грузилась главная страница ресурса по адресу https://stackoverflow.com/, затраченное время 468мс.`  
+![http](/Img/lan2.png) 
+
+3. Какой IP адрес у вас в интернете?
+```
+vagrant@vagrant:~$ dig TXT +short o-o.myaddr.l.google.com @ns1.google.com
+"46.242.9.215"
+```
+4. Какому провайдеру принадлежит ваш IP адрес? Какой автономной системе AS? Воспользуйтесь утилитой whois
+```
+whois 46.242.9.215
+netname:        NCN-BBCUST (В настоящий момент Ростелеком)
+origin:         AS42610
+```
+5. Через какие сети проходит пакет, отправленный с вашего компьютера на адрес 8.8.8.8? Через какие AS? Воспользуйтесь утилитой traceroute
+```
+vagrant@vagrant:~$ traceroute -An 8.8.8.8
+traceroute to 8.8.8.8 (8.8.8.8), 30 hops max, 60 byte packets
+ 1  192.168.1.1 [*]  0.675 ms  0.809 ms  0.752 ms
+ 2  * * *
+ 3  192.168.126.222 [*]  2.711 ms  3.049 ms  3.185 ms
+ 4  77.37.250.231 [AS42610]  3.130 ms  3.306 ms  3.252 ms
+ 5  72.14.209.81 [AS15169]  5.606 ms  5.553 ms  5.502 ms
+ 6  * * *
+ 7  108.170.250.129 [AS15169]  3.877 ms  3.590 ms 108.170.250.33 [AS15169]  3.503 ms
+ 8  108.170.250.66 [AS15169]  3.435 ms *  3.293 ms
+ 9  142.251.49.24 [AS15169]  17.756 ms  17.295 ms *
+10  172.253.66.110 [AS15169]  16.081 ms 216.239.43.20 [AS15169]  18.448 ms 209.85.254.20 [AS15169]  20.460 ms
+11  216.239.58.69 [AS15169]  18.765 ms 142.250.56.221 [AS15169]  18.639 ms 216.239.63.129 [AS15169]  18.400 ms
+12  * * *
+13  * * *
+14  * * *
+15  * * *
+16  * * *
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+21  8.8.8.8 [AS15169]  17.903 ms  17.192 ms *
+
+Сети: 77.37.250.231, 72.14.209.81, 108.170.250.129, 108.170.250.66, 142.251.49.24, 172.253.66.110, 216.239.58.69.
+AS: AS42610, AS15169.
+```
+6. Повторите задание 5 в утилите mtr. На каком участке наибольшая задержка - delay?
+```
+Keys:  Help   Display mode   Restart statistics   Order of fields   quit
+                                                                               Packets               Pings
+ Host                                                                        Loss%   Snt   Last   Avg  Best  Wrst StDev
+ 1. AS???    _gateway                                                         1.5%    65    0.8   0.7   0.6   1.0   0.1
+ 2. AS???    10.80.0.2                                                       54.7%    65  9005. 8861. 8682. 9005.  84.8
+ 3. AS???    192.168.126.222                                                  0.0%    65    2.5  28.9   2.3 470.5 100.2
+ 4. AS42610  77.37.250.231                                                   58.5%    65    2.7   2.8   2.5   3.2   0.2
+ 5. AS15169  72.14.209.81                                                     6.2%    65    3.3   4.2   3.0  21.6   2.9
+ 6. AS15169  108.170.250.33                                                   4.6%    65    3.8   4.2   3.7   8.6   0.7
+ 7. AS15169  108.170.250.51                                                  23.8%    64   11.5   9.4   3.0  51.8  12.4
+ 8. AS15169  142.251.49.158                                                  68.8%    64   15.9  17.8  15.8  34.1   4.2
+ 9. AS15169  108.170.235.204                                                  6.2%    64   18.8  19.8  18.5  51.4   4.5
+10. AS15169  142.250.57.7                                                     3.1%    64   19.1  19.2  18.8  20.0   0.2
+11. (waiting for reply)
+12. (waiting for reply)
+13. (waiting for reply)
+14. (waiting for reply)
+15. (waiting for reply)
+16. (waiting for reply)
+17. (waiting for reply)
+18. (waiting for reply)
+19. (waiting for reply)
+20. AS15169  dns.google                                                      25.0%    64   15.6  17.9  15.3  19.6   1.3
+
+Наибольшие задержки на участке провайдера.
+```
+7. Какие DNS сервера отвечают за доменное имя dns.google? Какие A записи? воспользуйтесь утилитой dig
+```
+vagrant@vagrant:~$ dig NS dns.google
+dns.google.             21600   IN      NS      ns4.zdns.google.
+dns.google.             21600   IN      NS      ns3.zdns.google.
+dns.google.             21600   IN      NS      ns2.zdns.google.
+dns.google.             21600   IN      NS      ns1.zdns.google.
+
+vagrant@vagrant:~$ dig A dns.google
+dns.google.             253     IN      A       8.8.4.4
+dns.google.             253     IN      A       8.8.8.8
+```
+8. Проверьте PTR записи для IP адресов из задания 7. Какое доменное имя привязано к IP? воспользуйтесь утилитой dig
+```
+vagrant@vagrant:~$ dig A -x 8.8.8.8
+8.8.8.8.in-addr.arpa.          IN      A
+
+vagrant@vagrant:~$ dig A -x 8.8.4.4
+4.4.8.8.in-addr.arpa.          IN      A
+```
+
+</details>
