@@ -908,3 +908,108 @@ arp -d <IP> (удаление определенного адреса)
 ```
 
 </details>
+
+
+**Домашнее задание к занятию "3.8. Компьютерные сети, лекция 3"**  
+<details><summary></summary>  
+
+1. Подключитесь к публичному маршрутизатору в интернет. Найдите маршрут к вашему публичному IP
+```
+telnet route-views.routeviews.org
+Username: rviews
+show ip route x.x.x.x/32
+show bgp x.x.x.x/32
+```
+```
+route-views>show ip route 46.242.9.215
+Routing entry for 46.242.8.0/22
+  Known via "bgp 6447", distance 20, metric 0
+  Tag 2497, type external
+  Last update from 202.232.0.2 4w0d ago
+  Routing Descriptor Blocks:
+  * 202.232.0.2, from 202.232.0.2, 4w0d ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 3
+      Route tag 2497
+      MPLS label: none
+      
+route-views>show bgp 46.242.9.215
+BGP routing table entry for 46.242.8.0/22, version 115493
+Paths: (23 available, best #17, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  8283 1299 42610
+    94.142.247.3 from 94.142.247.3 (94.142.247.3)
+      Origin incomplete, metric 0, localpref 100, valid, external
+      Community: 1299:30000 8283:1 8283:101
+      unknown transitive attribute: flag 0xE0 type 0x20 length 0x18
+        value 0000 205B 0000 0000 0000 0001 0000 205B
+              0000 0005 0000 0001
+      path 7FE132F307F0 RPKI State not found
+      rx pathid: 0, tx pathid: 0
+  Refresh Epoch 1
+  1351 6939 1273 12389 42610
+    132.198.255.253 from 132.198.255.253 (132.198.255.253)
+      Origin IGP, localpref 100, valid, external
+      path 7FE107FE5D70 RPKI State not found
+      rx pathid: 0, tx pathid: 0
+```
+2. Создайте dummy0 интерфейс в Ubuntu. Добавьте несколько статических маршрутов. Проверьте таблицу маршрутизации.
+```
+Настройка модуля и интерфейса:
+vagrant@vagrant:~$ echo "dummy" >> /etc/modules
+vagrant@vagrant:~$ echo "options dummy numdummies=2" > /etc/modprobe.d/dummy.conf
+vagrant@vagrant:~$ sudo ip link add dummy0 type dummy
+vagrant@vagrant:~$ sudo sudo ip addr add 10.100.0.1/32 dev dummy0
+vagrant@vagrant:~$ sudo sudo ip link set dummy0 up
+vagrant@vagrant:~$ ip ro
+default via 192.168.1.1 dev eth0 proto dhcp src 192.168.1.71 metric 100
+192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.71
+192.168.1.1 dev eth0 proto dhcp scope link src 192.168.1.71 metric 100
+
+Добавление статических маршрутов:
+vagrant@vagrant:~$ sudo cat /etc/netplan/01-netcfg.yaml
+network:
+    version: 2
+    renderer: networkd
+    ethernets:
+        eth0:
+            dhcp4: no
+            addresses:
+                - 192.168.1.72/24
+            routes:
+              - to: 10.0.0.0/24
+                via: 192.168.1.1
+              - to: 10.1.0.0/24
+                via: 192.168.1.1
+
+vagrant@vagrant:~$ ip ro
+10.0.0.0/24 via 192.168.1.1 dev eth0 proto static
+10.1.0.0/24 via 192.168.1.1 dev eth0 proto static
+192.168.1.0/24 dev eth0 proto kernel scope link src 192.168.1.72
+```
+3. Проверьте открытые TCP порты в Ubuntu, какие протоколы и приложения используют эти порты? Приведите несколько примеров.
+```
+vagrant@vagrant:~$ sudo ss -tpan
+State    Recv-Q   Send-Q     Local Address:Port      Peer Address:Port    Process
+LISTEN   0        4096       127.0.0.53%lo:53             0.0.0.0:*        users:(("systemd-resolve",pid=650,fd=13))
+LISTEN   0        128              0.0.0.0:22             0.0.0.0:*        users:(("sshd",pid=749,fd=3))
+ESTAB    0        36          192.168.1.72:22       192.168.1.138:64301    users:(("sshd",pid=1515,fd=4),("sshd",pid=1474,fd=4))
+LISTEN   0        128                 [::]:22                [::]:*        users:(("sshd",pid=749,fd=4))
+
+53 порт, поддерживает протоколы TCP, UDP. Использует systemd-resolve.
+22 порт, поддерживает протоколы TCP, UDP. Использует sshd.
+```
+4. Проверьте используемые UDP сокеты в Ubuntu, какие протоколы и приложения используют эти порты?
+```
+vagrant@vagrant:~$ sudo ss -upan
+State          Recv-Q         Send-Q                 Local Address:Port                  Peer Address:Port         Process
+UNCONN         0              0                      127.0.0.53%lo:53                         0.0.0.0:*             users:(("systemd-resolve",pid=650,fd=12))
+
+53 порт, поддерживает протоколы TCP, UDP. Использует systemd-resolve.
+```
+5. спользуя diagrams.net, создайте L3 диаграмму вашей домашней сети или любой другой сети, с которой вы работали.
+
+![home_lan](/Img/home_lan.png) 
+
+</details>
