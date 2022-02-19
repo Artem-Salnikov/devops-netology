@@ -1013,3 +1013,171 @@ UNCONN         0              0                      127.0.0.53%lo:53           
 ![home_lan](/Img/home_lan.png) 
 
 </details>
+
+**Домашнее задание к занятию "3.9. Элементы безопасности информационных систем"**  
+<details><summary></summary>    
+
+1. Установите Bitwarden плагин для браузера. Зарегестрируйтесь и сохраните несколько паролей.
+
+![Bitwarden](/Img/Bitwarden.png) 
+
+2. Установите Google authenticator на мобильный телефон. Настройте вход в Bitwarden акаунт через Google authenticator OTP.
+
+![Bitwarden2](/Img/Bitwarden2.png) 
+
+3. Установите apache2, сгенерируйте самоподписанный сертификат, настройте тестовый сайт для работы по HTTPS.
+```
+Apache2 установлен:
+vagrant@vagrant:~$ systemctl list-units --type service | grep apache
+  apache2.service
+ loaded active running The Apache HTTP Server
+ 
+ Генерация самоподписанного серта и настрйока тестового сайта:
+ vagrant@vagrant:/etc/ssl$ sudo openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/apache-selfsigned.key -out /etc/ssl/certs/apache-selfsigned.crt
+Generating a RSA private key
+.....................+++++
+.......................+++++
+writing new private key to '/etc/ssl/private/apache-selfsigned.key'
+-----
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+
+Country Name (2 letter code) [AU]:RU
+State or Province Name (full name) [Some-State]:
+Locality Name (eg, city) []:Moscow
+Organization Name (eg, company) [Internet Widgits Pty Ltd]:Company
+Organizational Unit Name (eg, section) []:Org
+Common Name (e.g. server FQDN or YOUR name) []:example.com
+Email Address []:qwe@ya.ru
+vagrant@vagrant:/etc/ssl$ sudo nano /etc/apache2/sites-available/example.com.conf
+vagrant@vagrant:/etc/ssl$ sudo mkdir /var/www/example.com
+vagrant@vagrant:/etc/ssl$ sudo nano /var/www/example.com/index.html
+vagrant@vagrant:/etc/ssl$ sudo a2ensite example.com.conf
+Enabling site example.com.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+vagrant@vagrant:/etc/ssl$ sudo apache2ctl configtest
+AH00558: apache2: Could not reliably determine the server's fully qualified domain name, using 127.0.1.1. Set the 'ServerName' directive globally to suppress this message
+Syntax OK
+vagrant@vagrant:/etc/ssl$ sudo systemctl reload apache2
+```
+![https](/Img/https.png) 
+
+4. Проверьте на TLS уязвимости произвольный сайт в интернете (кроме сайтов МВД, ФСБ, МинОбр, НацБанк, РосКосмос, РосАтом, РосНАНО и любых госкомпаний, объектов КИИ, ВПК ... и тому подобное).
+```
+vagrant@vagrant:~/testssl.sh$ ./testssl.sh -U --sneaky https://goodlooker.ru/
+
+###########################################################
+    testssl.sh       3.1dev from https://testssl.sh/dev/
+    (7b38198 2022-02-17 09:04:23 -- )
+
+      This program is free software. Distribution and
+             modification under GPLv2 permitted.
+      USAGE w/o ANY WARRANTY. USE IT AT YOUR OWN RISK!
+
+       Please file bugs @ https://testssl.sh/bugs/
+
+###########################################################
+
+ Using "OpenSSL 1.0.2-chacha (1.0.2k-dev)" [~183 ciphers]
+ on vagrant:./bin/openssl.Linux.x86_64
+ (built: "Jan 18 17:12:17 2019", platform: "linux-x86_64")
+
+
+ Start 2022-02-19 12:28:28        -->> 87.236.16.34:443 (goodlooker.ru) <<--
+
+ rDNS (87.236.16.34):    ssl.gizmo.beget.com.
+ Service detected:       HTTP
+
+
+ Testing vulnerabilities
+
+ Heartbleed (CVE-2014-0160)                not vulnerable (OK), no heartbeat extension
+ CCS (CVE-2014-0224)                       not vulnerable (OK)
+ Ticketbleed (CVE-2016-9244), experiment.  not vulnerable (OK)
+ ROBOT                                     Server does not support any cipher suites that use RSA key transport
+ Secure Renegotiation (RFC 5746)           supported (OK)
+ Secure Client-Initiated Renegotiation     not vulnerable (OK)
+ CRIME, TLS (CVE-2012-4929)                not vulnerable (OK)
+ BREACH (CVE-2013-3587)                    potentially NOT ok, "gzip" HTTP compression detected. - only supplied "/" tested
+                                           Can be ignored for static pages or if no secrets in the page
+ POODLE, SSL (CVE-2014-3566)               not vulnerable (OK)
+ TLS_FALLBACK_SCSV (RFC 7507)              Downgrade attack prevention supported (OK)
+ SWEET32 (CVE-2016-2183, CVE-2016-6329)    not vulnerable (OK)
+ FREAK (CVE-2015-0204)                     not vulnerable (OK)
+ DROWN (CVE-2016-0800, CVE-2016-0703)      not vulnerable on this host and port (OK)
+                                           make sure you don't use this certificate elsewhere with SSLv2 enabled services
+                                           https://censys.io/ipv4?q=9D9C3C5886158120E3965F171D23DDA09C79D96E11BF2575BB21AD0EF030C5B3 could help you to find out
+ LOGJAM (CVE-2015-4000), experimental      not vulnerable (OK): no DH EXPORT ciphers, no DH key detected with <= TLS 1.2
+ BEAST (CVE-2011-3389)                     TLS1: ECDHE-RSA-AES256-SHA ECDHE-RSA-AES128-SHA
+                                           VULNERABLE -- but also supports higher protocols  TLSv1.1 TLSv1.2 (likely mitigated)
+ LUCKY13 (CVE-2013-0169), experimental     potentially VULNERABLE, uses cipher block chaining (CBC) ciphers with TLS. Check patches
+ Winshock (CVE-2014-6321), experimental    not vulnerable (OK)
+ RC4 (CVE-2013-2566, CVE-2015-2808)        no RC4 ciphers detected (OK)
+
+
+ Done 2022-02-19 12:28:46 [  19s] -->> 87.236.16.34:443 (goodlooker.ru) <<--
+```
+5. Установите на Ubuntu ssh сервер, сгенерируйте новый приватный ключ. Скопируйте свой публичный ключ на другой сервер. Подключитесь к серверу по SSH-ключу.
+```
+Сгенерировал новый ключ:
+vagrant@vagrant:~$ ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/vagrant/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase):
+Enter same passphrase again:
+Your identification has been saved in /home/vagrant/.ssh/id_rsa
+Your public key has been saved in /home/vagrant/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:zFkIHcAlr6S1jfmX4SDonr2kJehQt4apH1nhHCs7kh8 vagrant@vagrant
+The key's randomart image is:
++---[RSA 3072]----+
+|     .++o.       |
+|      .+..       |
+|    o o o .      |
+|   o O O o       |
+|  o O * S .      |
+| o @ . o o o     |
+|+ E = o . +      |
+| * * B   .       |
+|..+ + o.         |
++----[SHA256]-----+
+Скопировал ключ и добавил содержимое в файл authorized_keys на хост-систему:
+vagrant@vagrant:~$ scp ~/.ssh/id_rsa.pub admin@192.168.1.138:C:/Users/Admin/.ssh/ubuntu.pub
+admin@192.168.1.138's password:
+id_rsa.pub                                               100%  569   713.5KB/s   00:00
+
+vagrant@vagrant:~$ ssh admin@192.168.1.138 "type "C:/Users/Admin/.ssh/ubuntu.pub" >> "C:/Users/Admin/.ssh/authorized_keys""
+admin@192.168.1.138's password:
+```
+6. Переименуйте файлы ключей из задания 5. Настройте файл конфигурации SSH клиента, так чтобы вход на удаленный сервер осуществлялся по имени сервера.
+```
+Переименовал ключи:
+mv  ~/.ssh/id_rsa.pub ~/.ssh/rsa-win10.pub
+mv  ~/.ssh/id_rsa ~/.ssh/rsa-win10
+
+Настроил конфигурационный файл:
+vagrant@vagrant:~$ cat ~/.ssh/config
+Host win10
+HostName 192.168.1.138
+Port 22
+User admin
+IdentityFile ~/.ssh/rsa-win10
+```
+7. Соберите дамп трафика утилитой tcpdump в формате pcap, 100 пакетов. Откройте файл pcap в Wireshark.
+```
+vagrant@vagrant:~$ sudo tcpdump -w 1.pcap -i eth0 -c 100
+tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 bytes
+100 packets captured
+101 packets received by filter
+0 packets dropped by kernel
+```
+
+![wireshark](/Img/wireshark.png) 
+
+</details>
