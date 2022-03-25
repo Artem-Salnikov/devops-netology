@@ -1181,3 +1181,191 @@ tcpdump: listening on eth0, link-type EN10MB (Ethernet), capture size 262144 byt
 ![wireshark](/Img/wireshark.png) 
 
 </details>
+
+**Домашнее задание к занятию "4.1. Командная оболочка Bash: Практические навыки"**
+<details><summary></summary>    
+
+# Домашнее задание к занятию "4.1. Командная оболочка Bash: Практические навыки"
+
+## Обязательная задача 1
+
+Есть скрипт:
+```bash
+a=1
+b=2
+c=a+b
+d=$a+$b
+e=$(($a+$b))
+```
+
+Какие значения переменным c,d,e будут присвоены? Почему?
+
+| Переменная  | Значение | Обоснование |
+| ------------- | ------------- | ------------- |
+| `c`  | a+b  | переменной с было присвоенно строчное значение  |
+| `d`  | 1+2  | переменной d было присвоенно строчное значение с использованием значений переменных a и b |
+| `e`  | 3  | внутри двойных круглых скобок вычисляются арифметические выражения и возвращается их результат |
+
+
+## Обязательная задача 2
+На нашем локальном сервере упал сервис и мы написали скрипт, который постоянно проверяет его доступность, записывая дату проверок до тех пор, пока сервис не станет доступным (после чего скрипт должен завершиться). В скрипте допущена ошибка, из-за которой выполнение не может завершиться, при этом место на Жёстком Диске постоянно уменьшается. Что необходимо сделать, чтобы его исправить:
+```bash
+while ((1==1)
+do
+	curl https://localhost:4757
+	if (($? != 0))
+	then
+		date >> curl.log
+	fi
+done
+```
+
+### Ваш скрипт:
+```bash
+#!/bin/bash
+# исправил синтаксическую ошибку в описании while
+while ((1==1))
+do
+        curl -k https://localhost:443
+        if (($? != 0))
+        then
+                date >> curl.log
+# добавил задержку, чтобы доступность ресурса проверялась раз в 5 минут
+                sleep 300
+                n=$(cat curl.log | wc -l)
+# добавил очистку файла с логами раз в сутки, чтобы не допустить полное заполнение диска
+                        if (($n > 288))
+                        then
+                        echo -n "" > curl.log
+                        fi
+# добавил завершение скрипта, если ресурс стал доступен
+        else exit
+        fi
+done
+```
+
+## Обязательная задача 3
+Необходимо написать скрипт, который проверяет доступность трёх IP: `192.168.0.1`, `173.194.222.113`, `87.250.250.242` по `80` порту и записывает результат в файл `log`. Проверять доступность необходимо пять раз для каждого узла.
+
+### Ваш скрипт:
+```bash
+#!/bin/bash
+data=$(date +"%m-%d-%Y")
+ip1=192.168.0.1:80
+ip2=173.194.222.113:80
+ip3=87.250.250.242:80
+for ((i=1; i <= 5; i++))
+do
+        curl $ip1
+        if (($? == 0))
+        then
+                echo $data $ip1 available >> log
+        else
+                echo $data $ip1 not available >> log
+        fi
+done
+echo -------------------------------- >> log
+for ((i=1; i <= 5; i++))
+do
+        curl $ip2
+        if (($? == 0))
+        then
+                echo $data $ip2 avaible >> log
+        else
+                echo $data $ip2 not avaible >> log
+        fi
+done
+echo -------------------------------- >> log
+for ((i=1; i <= 5; i++))
+do
+        curl $ip3
+        if (($? == 0))
+        then
+                echo $data $ip3 avaible >> log
+        else
+                echo $data $ip3 not avaible >> log
+        fi
+done
+echo -------------------------------- >> log
+```
+
+## Обязательная задача 4
+Необходимо дописать скрипт из предыдущего задания так, чтобы он выполнялся до тех пор, пока один из узлов не окажется недоступным. Если любой из узлов недоступен - IP этого узла пишется в файл error, скрипт прерывается.
+
+### Ваш скрипт:
+```bash
+#!/bin/bash
+data=$(date)
+ip1=192.168.0.1:80
+ip2=173.194.222.113:80
+ip3=192.168.200.255:80
+
+while ((1==1))
+do
+curl $ip1
+        if (($? == 0))
+        then
+                echo $data $ip1 available >> log
+        else
+                echo $data $ip1 not available >> error
+
+                exit
+        fi
+curl $ip2
+        if (($? == 0))
+        then
+                echo $data $ip2 available >> log
+        else
+                echo $data $ip2 not available >> error
+
+                exit
+        fi
+curl $ip2
+        if (($? == 0))
+        then
+                echo $data $ip2 available >> log
+        else
+                echo $data $ip2 not available >> error
+
+                exit
+        fi
+sleep 60
+echo ----------------------------------------- >> log
+done
+```
+
+## Дополнительное задание (со звездочкой*) - необязательно к выполнению
+
+Мы хотим, чтобы у нас были красивые сообщения для коммитов в репозиторий. Для этого нужно написать локальный хук для git, который будет проверять, что сообщение в коммите содержит код текущего задания в квадратных скобках и количество символов в сообщении не превышает 30. Пример сообщения: \[04-script-01-bash\] сломал хук.
+
+### Ваш скрипт:
+```bash
+#!/bin/bash; C:/Program Files/Git/usr/bin/bash.exe
+
+Color_Off='\033[0m' 
+BRed="\033[1;31m"         
+BGreen="\033[1;32m"       
+BYellow="\033[1;33m"      
+BBlue="\033[1;34m"        
+
+MSG_FILE=$1
+FILE_CONTENT="$(cat $MSG_FILE)"
+count="$(wc -m <<< $FILE_CONTENT)"
+
+export REGEX='\[04-script-01-bash\]'
+export ERROR_MSG1="Commit message format must match regex [04-script-01-bash]"
+export ERROR_MSG2="Commit message must be less than or equal to 30 characters long"
+if [[ $FILE_CONTENT =~ $REGEX ]] && (( $count <= 31 )); then
+ printf "${BGreen}Good commit!${Color_Off}"
+else
+  printf "${BRed}Bad commit ${BBlue}\"$FILE_CONTENT\"\n"
+ printf "${BYellow}$ERROR_MSG1\n"
+ printf "${BYellow}$ERROR_MSG2\n"
+ printf "commit-msg hook failed (add --no-verify to bypass)\n"
+ 
+ exit 1
+fi
+exit 0
+```
+
+</details>
