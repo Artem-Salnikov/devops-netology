@@ -1412,12 +1412,32 @@ for result in result_os.split('\n'):
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+import os
+bash_command = ["cd E:/GIT/devops-netology", "git status"]
+path = bash_command [0]
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+print('modified files:')
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print((((path.strip('cd ')) + '/' + prepare_result)))
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+"C:\Program Files\Python310\python.exe" E:\GIT\devops-netology\04-script-02-py-2.py
+modified files:
+E:/GIT/devops-netology/.idea/workspace.xml
+E:/GIT/devops-netology/.idea/workspace.xml
+E:/GIT/devops-netology/123/12/1/qwe.txt
+E:/GIT/devops-netology/Hello2.py
+E:/GIT/devops-netology/README.md
+E:/GIT/devops-netology/test
+E:/GIT/devops-netology/test2
+
+Process finished with exit code 0
 ```
 
 ## Обязательная задача 3

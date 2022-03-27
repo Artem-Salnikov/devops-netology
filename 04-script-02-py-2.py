@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
-print ('Введите путь до репозитория:')
-bash_command = ["cd " + input(), "git status"]
+bash_command = ["cd E:/GIT/devops-netology", "git status"]
 path = bash_command [0]
 result_os = os.popen(' && '.join(bash_command)).read()
 is_change = False
