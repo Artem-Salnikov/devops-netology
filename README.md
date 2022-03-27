@@ -1417,7 +1417,6 @@ import os
 bash_command = ["cd E:/GIT/devops-netology", "git status"]
 path = bash_command [0]
 result_os = os.popen(' && '.join(bash_command)).read()
-is_change = False
 print('modified files:')
 for result in result_os.split('\n'):
     if result.find('modified') != -1:
@@ -1445,12 +1444,48 @@ Process finished with exit code 0
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+import os
+import sys
+
+if len(sys.argv) > 1:
+    path = sys.argv[1]
+else:
+    path = os.getcwd()
+
+path = path.replace('\\','/')
+bash_command = ["cd " + path, "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print(((path + '/' + prepare_result)))
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+Запуск без входного параметра:
+PS E:\GIT\devops-netology> python 3.py
+E:/GIT/devops-netology/.idea/workspace.xml
+E:/GIT/devops-netology/123/12/1/qwe.txt
+E:/GIT/devops-netology/Hello.py
+E:/GIT/devops-netology/Hello2.py
+E:/GIT/devops-netology/README.md
+E:/GIT/devops-netology/test
+E:/GIT/devops-netology/test2
+
+Запуск с входным параметром в виде пути до локального репозитория:
+PS E:\GIT\devops-netology> python 3.py E:/git/git_test
+E:/git/git_test/file
+E:/git/git_test/log
+
+Запуск с входным параметром в виде пути до несуществующей директории:
+PS E:\GIT\devops-netology> python 3.py E:/tor
+Системе не удается найти указанный путь.
+
+Запуск с входным параметром в виде пути до директории, которая не является локальным репозиторием:
+PS E:\GIT\devops-netology> python 3.py E:/torrent
+fatal: not a git repository (or any of the parent directories): .git
 ```
 
 ## Обязательная задача 4
@@ -1458,12 +1493,44 @@ Process finished with exit code 0
 
 ### Ваш скрипт:
 ```python
-???
+#!/usr/bin/env python3
+import socket
+import time
+
+host1 = 'drive.google.com'
+host2 = 'mail.google.com'
+host3 = 'google.com'
+
+DNS = {host1 : socket.gethostbyname(host1), host2 : socket.gethostbyname(host2), host3 : socket.gethostbyname(host3)}
+while 1==1:
+    for key in DNS:
+        print ('<',key,'>','-','<',DNS[key],'>')
+        ip = socket.gethostbyname(key)
+        if ip != DNS[key]:
+            print('--------------------------------------------')
+            print ('[ERROR] <',key,'> IP mismatch: <',DNS[key],'> <',ip,'>')
+            DNS[key] = ip
+    print('--------------------------------------------')
+    time.sleep(30)
 ```
 
 ### Вывод скрипта при запуске при тестировании:
 ```
-???
+"C:\Program Files\Python310\python.exe" E:/GIT/devops-netology/Hello.py
+< drive.google.com > - < 74.125.131.194 >
+< mail.google.com > - < 64.233.164.18 >
+< google.com > - < 142.251.1.102 >
+--------------------------------------------
+< drive.google.com > - < 74.125.131.194 >
+< mail.google.com > - < 64.233.164.18 >
+< google.com > - < 142.251.1.102 >
+--------------------------------------------
+[ERROR] < google.com > IP mismatch: < 142.251.1.102 > < 10.0.0.180 >
+--------------------------------------------
+< drive.google.com > - < 74.125.131.194 >
+< mail.google.com > - < 64.233.164.18 >
+< google.com > - < 10.0.0.180 >
+--------------------------------------------
 ```
 
 ## Дополнительное задание (со звездочкой*) - необязательно к выполнению
