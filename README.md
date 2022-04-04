@@ -1251,42 +1251,21 @@ done
 ```bash
 #!/bin/bash
 data=$(date +"%m-%d-%Y")
-ip1=192.168.0.1:80
-ip2=173.194.222.113:80
-ip3=87.250.250.242:80
+IP=([1]=192.168.0.1:80 [2]=173.194.222.113:80 [3]=87.250.250.242:80)
+
 for ((i=1; i <= 5; i++))
 do
-        curl $ip1
-        if (($? == 0))
+        for n in ${!IP[@]}
+        do
+        curl ${IP[$n]}
+                if (($? == 0))
         then
-                echo $data $ip1 available >> log
+                echo $data ${IP[$n]} available >> log
         else
-                echo $data $ip1 not available >> log
+                echo $data ${IP[$n]} not available >> log
         fi
+        done
 done
-echo -------------------------------- >> log
-for ((i=1; i <= 5; i++))
-do
-        curl $ip2
-        if (($? == 0))
-        then
-                echo $data $ip2 avaible >> log
-        else
-                echo $data $ip2 not avaible >> log
-        fi
-done
-echo -------------------------------- >> log
-for ((i=1; i <= 5; i++))
-do
-        curl $ip3
-        if (($? == 0))
-        then
-                echo $data $ip3 avaible >> log
-        else
-                echo $data $ip3 not avaible >> log
-        fi
-done
-echo -------------------------------- >> log
 ```
 
 ## Обязательная задача 4
@@ -1295,42 +1274,23 @@ echo -------------------------------- >> log
 ### Ваш скрипт:
 ```bash
 #!/bin/bash
-data=$(date)
-ip1=192.168.0.1:80
-ip2=173.194.222.113:80
-ip3=192.168.200.255:80
+data=$(date +"%m-%d-%Y")
+IP=([1]=192.168.0.1:80 [2]=173.194.222.113:80 [3]=87.250.250.242:80)
 
 while ((1==1))
 do
-curl $ip1
-        if (($? == 0))
+        for n in ${!IP[@]}
+        do
+        curl ${IP[$n]}
+                if (($? == 0))
         then
-                echo $data $ip1 available >> log
+                echo $data ${IP[$n]} available >> log
         else
-                echo $data $ip1 not available >> error
-
+                echo $data ${IP[$n]} not available >> error
                 exit
         fi
-curl $ip2
-        if (($? == 0))
-        then
-                echo $data $ip2 available >> log
-        else
-                echo $data $ip2 not available >> error
-
-                exit
-        fi
-curl $ip2
-        if (($? == 0))
-        then
-                echo $data $ip2 available >> log
-        else
-                echo $data $ip2 not available >> error
-
-                exit
-        fi
+        done
 sleep 60
-echo ----------------------------------------- >> log
 done
 ```
 
@@ -1548,3 +1508,116 @@ while 1==1:
 ```
 
 </details>
+
+**Домашнее задание к занятию "4.3. Языки разметки JSON и YAML"**
+<details><summary></summary>    
+
+# Домашнее задание к занятию "4.3. Языки разметки JSON и YAML"
+
+
+## Обязательная задача 1
+Мы выгрузили JSON, который получили через API запрос к нашему сервису:
+```json
+{ 
+  "info" : "Sample JSON output from our service\\t",
+    "elements" : [
+        {"name" : "first",
+        "type" : "server",
+        "ip" : "46.242.9.215" 
+        },
+        {"name" : "second",
+        "type" : "proxy",
+        "ip" : "71.78.22.43"
+        }
+    ]
+}
+```
+  Нужно найти и исправить все ошибки, которые допускает наш сервис
+
+## Обязательная задача 2
+В прошлый рабочий день мы создавали скрипт, позволяющий опрашивать веб-сервисы и получать их IP. К уже реализованному функционалу нам нужно добавить возможность записи JSON и YAML файлов, описывающих наши сервисы. Формат записи JSON по одному сервису: `{ "имя сервиса" : "его IP"}`. Формат записи YAML по одному сервису: `- имя сервиса: его IP`. Если в момент исполнения скрипта меняется IP у сервиса - он должен так же поменяться в yml и json файле.
+
+### Ваш скрипт:
+```python
+#!/usr/bin/env python3
+import socket
+import time
+import json
+import yaml
+
+host1 = 'drive.google.com'
+host2 = 'mail.google.com'
+host3 = 'google.com'
+
+DNS = {host1 : socket.gethostbyname(host1), host2 : socket.gethostbyname(host2), host3 : socket.gethostbyname(host3)}
+while True:
+    for key in DNS:
+        print ('<',key,'>','-','<',DNS[key],'>')
+        ip = socket.gethostbyname(key)
+        with open('2.json', 'w') as js:
+            js.write(json.dumps(DNS, indent=2))
+        with open('2.yaml', 'w') as ym:
+            ym.write(yaml.dump(DNS, explicit_start=True, explicit_end=True, default_flow_style=False))
+        if ip != DNS[key]:
+            print('--------------------------------------------')
+            print ('[ERROR] <',key,'> IP mismatch: <',DNS[key],'> <',ip,'>')
+            DNS[key] = ip
+    print('--------------------------------------------')
+    time.sleep(30)
+```
+
+### Вывод скрипта при запуске при тестировании:
+```
+< drive.google.com > - < 209.85.233.194 >
+< mail.google.com > - < 173.194.222.18 >
+< google.com > - < 64.233.165.139 >
+--------------------------------------------
+< drive.google.com > - < 209.85.233.194 >
+< mail.google.com > - < 173.194.222.18 >
+< google.com > - < 64.233.165.139 >
+--------------------------------------------
+[ERROR] < google.com > IP mismatch: < 64.233.165.139 > < 146.146.146.146 >
+--------------------------------------------
+< drive.google.com > - < 209.85.233.194 >
+< mail.google.com > - < 173.194.222.18 >
+< google.com > - < 146.146.146.146 >
+--------------------------------------------
+
+```
+
+### json-файл(ы), который(е) записал ваш скрипт:
+```json
+{
+  "drive.google.com": "74.125.131.194",
+  "mail.google.com": "142.251.1.83",
+  "google.com": "146.146.146.146"
+}
+```
+
+### yml-файл(ы), который(е) записал ваш скрипт:
+```yaml
+---
+drive.google.com: 209.85.233.194
+google.com: 146.146.146.146
+mail.google.com: 173.194.222.18
+...
+
+```
+
+## Дополнительное задание (со звездочкой*) - необязательно к выполнению
+
+Так как команды в нашей компании никак не могут прийти к единому мнению о том, какой формат разметки данных использовать: JSON или YAML, нам нужно реализовать парсер из одного формата в другой. Он должен уметь:
+   * Принимать на вход имя файла
+   * Проверять формат исходного файла. Если файл не json или yml - скрипт должен остановить свою работу
+   * Распознавать какой формат данных в файле. Считается, что файлы *.json и *.yml могут быть перепутаны
+   * Перекодировать данные из исходного формата во второй доступный (из JSON в YAML, из YAML в JSON)
+   * При обнаружении ошибки в исходном файле - указать в стандартном выводе строку с ошибкой синтаксиса и её номер
+   * Полученный файл должен иметь имя исходного файла, разница в наименовании обеспечивается разницей расширения файлов
+
+### Ваш скрипт:
+```python
+???
+```
+
+### Пример работы скрипта:
+???
