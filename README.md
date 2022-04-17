@@ -1774,3 +1774,127 @@ d. Необходимо рабочее окружение для тестиро�
 Если бы у меня был выбор, то я бы использовал гомогенную среду виртуализации. Она эффективно управляется и проще масштабируется. Но в реальной жизни обычно приходится иметь дело с гетерогенной средой виртуализации, т.к. задачи ставятся, но деньги не всегда выделяются.
 
 </details>
+
+**Домашнее задание к занятию "5.2. Применение принципов IaaC в работе с виртуальными машинами"**
+<details><summary></summary>
+
+1. 
+Опишите своими словами основные преимущества применения на практике IaaC паттернов.  
+* Скорость и уменьшение затрат. Iaac позволяет быстрее конфигурировать инфраструктуру для разработки и тестирования, обеспечивает прозрачность построения инфраструктуры для всех причастных.
+* Масштабируемость и стандартизация. Iaac позволяет получить стабильную среду. Исключаются человеческие ошибки при ручном развертывании. Развертывания при использовании паттернов Iaac повторяемы и предотвращают проблемы во время выполнения, вызванных дрейфом конфигурации или отсутствием зависимостей.  
+* Скорость и эффективность разработки. Iaac ускоряет и автоматизирует каждый из этапов CI/CD.
+* Документирование. Iaac можно рассматривать, как некую форму документации, которая описывает всю вашу инфраструктуру в доступном для специалистов виде. Позволяет быстро откатить на рабочую версию в стандартной или аварийной ситуации.   
+* Компания не так привязана к конкретным сотрудникам, которые подвержены смерти, заболеваниям или уходам в другие компании. Т.к. все актуальные сведения и исторические данные хранятся в виде кода.    
+
+Какой из принципов IaaC является основополагающим?  
+
+Идемпотентность.  
+Независимость компании от отдельных сотрудников.
+
+2. 
+Чем Ansible выгодно отличается от других систем управление конфигурациями?
+* не нужен агент на клиентах, для доступа использует SSH
+* описание конф файлов на yaml
+* универсален и может быть применен на всех стадиях жизненного цикла инфраструктуры
+
+Какой, на ваш взгляд, метод работы систем конфигурации более надёжный push или pull?  
+
+Без опыта работы с системами конфигурации я бы выбрал push. На мой взгляд надежнее отправить конфигурацию клиентам принудительно и напрямую без использования агентов в случае pull.  
+Но в реальной работе следует использовать то, что больше подходит к конкретному случаю или комбинировать.
+
+
+
+3. Установить на личный компьютер:
+* VirtualBox
+* Vagrant
+* Ansible
+```
+artem@Main:~$ virtualbox -h
+Oracle VM VirtualBox VM Selector v6.1.32_Ubuntu
+
+artem@Main:~$ vagrant -v
+Vagrant 2.2.6
+
+artem@Main:~$ ansible --version
+ansible 2.9.6
+```
+
+4. Воспроизвести практическую часть лекции самостоятельно.
+* Создать виртуальную машину.
+* Зайти внутрь ВМ, убедиться, что Docker установлен с помощью команды
+
+```
+artem@Main:~/vagrant$ vagrant up
+Bringing machine 'server1.netology' up with 'virtualbox' provider...
+==> server1.netology: Importing base box 'bento/ubuntu-20.04'...
+==> server1.netology: Matching MAC address for NAT networking...
+==> server1.netology: Checking if box 'bento/ubuntu-20.04' version '202112.19.0' is up to date...
+==> server1.netology: Setting the name of the VM: server1.netology
+==> server1.netology: Clearing any previously set network interfaces...
+==> server1.netology: Preparing network interfaces based on configuration...
+    server1.netology: Adapter 1: nat
+    server1.netology: Adapter 2: hostonly
+==> server1.netology: Forwarding ports...
+    server1.netology: 22 (guest) => 20011 (host) (adapter 1)
+    server1.netology: 22 (guest) => 2222 (host) (adapter 1)
+==> server1.netology: Running 'pre-boot' VM customizations...
+==> server1.netology: Booting VM...
+==> server1.netology: Waiting for machine to boot. This may take a few minutes...
+    server1.netology: SSH address: 127.0.0.1:2222
+    server1.netology: SSH username: vagrant
+    server1.netology: SSH auth method: private key
+    server1.netology: Warning: Connection reset. Retrying...
+    server1.netology: Warning: Remote connection disconnect. Retrying...
+    server1.netology:
+    server1.netology: Vagrant insecure key detected. Vagrant will automatically replace
+    server1.netology: this with a newly generated keypair for better security.
+    server1.netology:
+    server1.netology: Inserting generated public key within guest...
+    server1.netology: Removing insecure key from the guest if it's present...
+    server1.netology: Key inserted! Disconnecting and reconnecting using new SSH key...
+==> server1.netology: Machine booted and ready!
+==> server1.netology: Checking for guest additions in VM...
+==> server1.netology: Setting hostname...
+==> server1.netology: Configuring and enabling network interfaces...
+==> server1.netology: Mounting shared folders...
+    server1.netology: /vagrant => /home/artem/vagrant
+==> server1.netology: Running provisioner: ansible...
+Vagrant has automatically selected the compatibility mode '2.0'
+according to the Ansible version installed (2.9.6).
+
+Alternatively, the compatibility mode can be specified in your Vagrantfile:
+https://www.vagrantup.com/docs/provisioning/ansible_common.html#compatibility_mode
+
+    server1.netology: Running ansible-playbook...
+
+PLAY [nodes] *******************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [server1.netology]
+
+TASK [Create directory for ssh-keys] *******************************************
+ok: [server1.netology]
+
+TASK [Adding rsa-key in /root/.ssh/authorized_keys] ****************************
+changed: [server1.netology]
+
+TASK [Checking DNS] ************************************************************
+changed: [server1.netology]
+
+TASK [Installing tools] ********************************************************
+ok: [server1.netology] => (item=['git', 'curl'])
+
+TASK [Installing docker] *******************************************************
+changed: [server1.netology]
+
+TASK [Add the current user to docker group] ************************************
+changed: [server1.netology]
+
+PLAY RECAP *********************************************************************
+server1.netology           : ok=7    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+
+vagrant@server1:~$ docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
+```
+
+</details>
