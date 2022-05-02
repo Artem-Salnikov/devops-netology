@@ -4,15 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 04-script-03-yaml">
+    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 05-virt-05-docker-swarm">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/04-script-02-py-2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/123/12/1/qwe.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hello.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Hello2.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/has_been_moved.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -323,7 +317,63 @@
       <option name="project" value="LOCAL" />
       <updated>1649430844703</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="HW 05-virt-01-basics">
+      <created>1649683155034</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1649683155034</updated>
+    </task>
+    <task id="LOCAL-00024" summary="HW 05-virt-01-basics">
+      <created>1649683848038</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1649683848038</updated>
+    </task>
+    <task id="LOCAL-00025" summary="HW 05-virt-02-iaac">
+      <created>1650200592416</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1650200592416</updated>
+    </task>
+    <task id="LOCAL-00026" summary="HW 05-virt-02-iaac">
+      <created>1650200637779</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1650200637779</updated>
+    </task>
+    <task id="LOCAL-00027" summary="HW 05-virt-03-docker">
+      <created>1650651281648</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1650651281648</updated>
+    </task>
+    <task id="LOCAL-00028" summary="HW 05-virt-03-docker">
+      <created>1650651413291</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1650651413291</updated>
+    </task>
+    <task id="LOCAL-00029" summary="HW 05-virt-04-docker-compose">
+      <created>1650908145015</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1650908145015</updated>
+    </task>
+    <task id="LOCAL-00030" summary="HW 05-virt-05-docker-swarm">
+      <created>1651501882536</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1651501882536</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -360,6 +410,11 @@
     <MESSAGE value="HW 3.8" />
     <MESSAGE value="HW 04-script-02-py" />
     <MESSAGE value="HW 04-script-03-yaml" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW 04-script-03-yaml" />
+    <MESSAGE value="HW 05-virt-01-basics" />
+    <MESSAGE value="HW 05-virt-02-iaac" />
+    <MESSAGE value="HW 05-virt-03-docker" />
+    <MESSAGE value="HW 05-virt-04-docker-compose" />
+    <MESSAGE value="HW 05-virt-05-docker-swarm" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW 05-virt-05-docker-swarm" />
   </component>
 </project>
