@@ -2165,3 +2165,261 @@ Redis не используется, как основное хранилище 
 ```
 
 </details>
+
+**Домашнее задание к занятию "6.2. SQL"**
+<details><summary></summary>
+
+1. Используя docker поднимите инстанс PostgreSQL (версию 12) c 2 volume, 
+в который будут складываться данные БД и бэкапы.
+
+Приведите получившуюся команду или docker-compose манифест.
+```yaml
+version: '3'
+
+networks:
+  postgres_network:
+    driver: bridge
+
+volumes:
+  db_data:
+  backup_data:
+
+services:
+
+  postgres:
+    image: postgres:12.10
+    environment:
+      POSTGRES_USER: "postgres" 
+      POSTGRES_PASSWORD: "pass" 
+            
+    container_name: postgres
+    volumes:
+      - ./db_data/:/var/lib/postgresql/data/
+      - ./backup_data/:/backup_data/
+    restart: always
+    networks:
+      - postgres_network
+    ports:
+      - "5432:5432"
+```
+
+2. В БД из задачи 1: 
+- создайте пользователя test-admin-user и БД test_db
+- в БД test_db создайте таблицу orders и clients (спeцификация таблиц ниже)
+- предоставьте привилегии на все операции пользователю test-admin-user на таблицы БД test_db
+- создайте пользователя test-simple-user  
+- предоставьте пользователю test-simple-user права на SELECT/INSERT/UPDATE/DELETE данных таблиц БД test_db
+
+Таблица orders:
+- id (serial primary key)
+- наименование (string)
+- цена (integer)
+
+Таблица clients:
+- id (serial primary key)
+- фамилия (string)
+- страна проживания (string, index)
+- заказ (foreign key orders)
+
+Приведите:
+- итоговый список БД после выполнения пунктов выше
+```
+SELECT datname FROM pg_database;
+
+datname  |
+---------+
+postgres |
+template1|
+template0|
+test_db  |
+```
+- описание таблиц (describe)
+```
+SELECT *
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE table_name = 'orders';
+
+table_catalog|table_schema|table_name|column_name |ordinal_position|column_default                    |is_nullable|data_type        |character_maximum_length|character_octet_length|numeric_precision|numeric_precision_radix|numeric_scale|datetime_precision|interval_type|interval_precision|character_set_catalog|character_set_schema|character_set_name|collation_catalog|collation_schema|collation_name|domain_catalog|domain_schema|domain_name|udt_catalog|udt_schema|udt_name|scope_catalog|scope_schema|scope_name|maximum_cardinality|dtd_identifier|is_self_referencing|is_identity|identity_generation|identity_start|identity_increment|identity_maximum|identity_minimum|identity_cycle|is_generated|generation_expression|is_updatable|
+-------------+------------+----------+------------+----------------+----------------------------------+-----------+-----------------+------------------------+----------------------+-----------------+-----------------------+-------------+------------------+-------------+------------------+---------------------+--------------------+------------------+-----------------+----------------+--------------+--------------+-------------+-----------+-----------+----------+--------+-------------+------------+----------+-------------------+--------------+-------------------+-----------+-------------------+--------------+------------------+----------------+----------------+--------------+------------+---------------------+------------+
+test_db      |public      |orders    |id          |               1|nextval('orders_id_seq'::regclass)|NO         |integer          |                        |                      |               32|                      2|            0|                  |             |                  |                     |                    |                  |                 |                |              |              |             |           |test_db    |pg_catalog|int4    |             |            |          |                   |1             |NO                 |NO         |                   |              |                  |                |                |NO            |NEVER       |                     |YES         |
+test_db      |public      |orders    |наименование|               2|                                  |YES        |character varying|                      30|                   120|                 |                       |             |                  |             |                  |                     |                    |                  |                 |                |              |              |             |           |test_db    |pg_catalog|varchar |             |            |          |                   |2             |NO                 |NO         |                   |              |                  |                |                |NO            |NEVER       |                     |YES         |
+test_db      |public      |orders    |цена        |               3|                                  |YES        |integer          |                        |                      |               32|                      2|            0|                  |             |                  |                     |                    |                  |                 |                |              |              |             |           |test_db    |pg_catalog|int4    |             |            |          |                   |3             |NO                 |NO         |                   |              |                  |                |                |NO            |NEVER       |                     |YES         |
+```
+- SQL-запрос для выдачи списка пользователей с правами над таблицами test_db
+```
+SELECT grantee, string_agg(privilege_type, ', ') AS privileges
+FROM information_schema.role_table_grants 
+WHERE table_name='clients'   
+GROUP BY grantee;
+
+SELECT grantee, string_agg(privilege_type, ', ') AS privileges
+FROM information_schema.role_table_grants 
+WHERE table_name='orders'   
+GROUP BY grantee;
+
+```
+- список пользователей с правами над таблицами test_db
+```
+grantee         |privileges                                                   |
+----------------+-------------------------------------------------------------+
+postgres        |INSERT, SELECT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER|
+test-admin-user |INSERT, SELECT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER|
+test-simple-user|INSERT, SELECT, UPDATE, DELETE                               |
+                             |
+```
+
+3. Используя SQL синтаксис - наполните таблицы следующими тестовыми данными:
+
+Таблица orders
+
+|Наименование|цена|
+|------------|----|
+|Шоколад| 10 |
+|Принтер| 3000 |
+|Книга| 500 |
+|Монитор| 7000|
+|Гитара| 4000|
+
+Таблица clients
+
+|ФИО|Страна проживания|
+|------------|----|
+|Иванов Иван Иванович| USA |
+|Петров Петр Петрович| Canada |
+|Иоганн Себастьян Бах| Japan |
+|Ронни Джеймс Дио| Russia|
+|Ritchie Blackmore| Russia|
+
+Используя SQL синтаксис:
+- вычислите количество записей для каждой таблицы 
+- приведите в ответе:
+    - запросы 
+    - результаты их выполнения.
+```
+INSERT INTO orders (наименование, цена)
+values
+('Шоколад', 10),
+('Принтер', 3000),
+('Книга', 500),
+('Монитор', 7000),
+('Гитара', 4000);
+
+id|наименование|цена|
+--+------------+----+
+ 1|Шоколад     |  10|
+ 2|Принтер     |3000|
+ 3|Книга       | 500|
+ 4|Монитор     |7000|
+ 5|Гитара      |4000|
+ 
+ INSERT INTO clients  (фамилия, страна_проживания)
+values
+('Иванов Иван Иванович', 'USA'),
+('Петров Петр Петрович', 'Canada'),
+('Иоганн Себастьян Бах', 'Japan'),
+('Ронни Джеймс Дио', 'Russia'),
+('Ritchie Blackmore', 'Russia');
+
+id|фамилия             |страна_проживания|заказ|
+--+--------------------+-----------------+-----+
+ 1|Иванов Иван Иванович|USA              |     |
+ 2|Петров Петр Петрович|Canada           |     |
+ 3|Иоганн Себастьян Бах|Japan            |     |
+ 4|Ронни Джеймс Дио    |Russia           |     |
+ 5|Ritchie Blackmore   |Russia           |     |
+ 
+ SELECT count(*)
+FROM orders
+
+count|
+-----+
+    5|
+    
+SELECT count(*)
+FROM clients
+
+count|
+-----+
+    5|
+```
+
+4. Часть пользователей из таблицы clients решили оформить заказы из таблицы orders.
+
+Используя foreign keys свяжите записи из таблиц, согласно таблице:
+
+|ФИО|Заказ|
+|------------|----|
+|Иванов Иван Иванович| Книга |
+|Петров Петр Петрович| Монитор |
+|Иоганн Себастьян Бах| Гитара |
+
+Приведите SQL-запросы для выполнения данных операций.
+
+Приведите SQL-запрос для выдачи всех пользователей, которые совершили заказ, а также вывод данного запроса.
+ 
+Подсказк - используйте директиву `UPDATE`.
+
+```
+UPDATE clients
+set заказ = 3
+WHERE id = 1;
+
+UPDATE clients
+set заказ = 4
+WHERE id = 2;
+
+UPDATE clients
+set заказ = 5
+WHERE id = 3;
+
+select * from clients
+where заказ != 0
+
+id|фамилия             |страна_проживания|заказ|
+--+--------------------+-----------------+-----+
+ 1|Иванов Иван Иванович|USA              |    3|
+ 2|Петров Петр Петрович|Canada           |    4|
+ 3|Иоганн Себастьян Бах|Japan            |    5|
+ 
+```
+5. Получите полную информацию по выполнению запроса выдачи всех пользователей из задачи 4 
+(используя директиву EXPLAIN).
+
+Приведите получившийся результат и объясните что значат полученные значения.
+
+```
+QUERY PLAN                                                |
+----------------------------------------------------------+
+Seq Scan on clients  (cost=0.00..15.88 rows=468 width=144)|
+  Filter: ("заказ" <> 0)                                  |
+
+Explain сообщает, что выполняется последовательное чтение данных из таблицы clients. 
+Сosts показывает затратность операции, 0.00 первая строка, 15.88 всех строк. Единицой измерения является стоимость чтения объема данных (8KB) при последовательном чтении.
+Rows показывает количество строк.
+Width показывает средний размер одной строки в байтах.
+```
+6. Создайте бэкап БД test_db и поместите его в volume, предназначенный для бэкапов (см. Задачу 1).
+
+Остановите контейнер с PostgreSQL (но не удаляйте volumes).
+
+Поднимите новый пустой контейнер с PostgreSQL.
+
+Восстановите БД test_db в новом контейнере.
+
+Приведите список операций, который вы применяли для бэкапа данных и восстановления. 
+
+```
+docker-compose run postgres bash
+
+pg_dump -h 192.168.1.121 -U postgres -W test_db > /backup_data/test_db.dump
+
+ls -l /backup_data/
+total 8
+-rw-r--r-- 1 root root 4539 May 16 20:51 test_db.dump
+
+create database test_db
+
+psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
+```
+
+</details>

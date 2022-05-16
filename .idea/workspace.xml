@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 05-virt-05-docker-swarm">
+    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 06-db-01-basics">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
@@ -380,7 +380,14 @@
       <option name="project" value="LOCAL" />
       <updated>1651502172891</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="HW 06-db-01-basics">
+      <created>1652189530885</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1652189530885</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -422,6 +429,7 @@
     <MESSAGE value="HW 05-virt-03-docker" />
     <MESSAGE value="HW 05-virt-04-docker-compose" />
     <MESSAGE value="HW 05-virt-05-docker-swarm" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW 05-virt-05-docker-swarm" />
+    <MESSAGE value="HW 06-db-01-basics" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW 06-db-01-basics" />
   </component>
 </project>
