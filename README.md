@@ -2424,7 +2424,7 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 </details>
 
-Read more [here](/HW/6.3.MySQL/README.md)
+[**Домашнее задание к занятию "6.3. MySQL"**](/HW/6.3.MySQL/README.md)
 
 
 
