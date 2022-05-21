@@ -17,6 +17,19 @@
 
 В следующих заданиях мы будем продолжать работу с данным контейнером.
 
+```
+mysql  Ver 8.0.29 for Linux on x86_64 (MySQL Community Server - GPL)
+
+mysql> select * from orders
+    -> where price>300;
++----+----------------+-------+
+| id | title          | price |
++----+----------------+-------+
+|  2 | My little pony |   500 |
++----+----------------+-------+
+1 row in set (0.00 sec)
+```
+
 2. Создайте пользователя test в БД c паролем test-pass, используя:
 - плагин авторизации mysql_native_password
 - срок истечения пароля - 180 дней 
@@ -31,6 +44,17 @@
 Используя таблицу INFORMATION_SCHEMA.USER_ATTRIBUTES получите данные по пользователю `test` и 
 **приведите в ответе к задаче**.
 
+```
+mysql> SELECT * FROM INFORMATION_SCHEMA.USER_ATTRIBUTES
+    -> WHERE USER='test' AND HOST='localhost';
++------+-----------+---------------------------------------+
+| USER | HOST      | ATTRIBUTE                             |
++------+-----------+---------------------------------------+
+| test | localhost | {"fname": "James", "lname": "Pretty"} |
++------+-----------+---------------------------------------+
+1 row in set (0.00 sec)
+```
+
 3. Установите профилирование `SET profiling = 1`.
 Изучите вывод профилирования команд `SHOW PROFILES;`.
 
@@ -39,6 +63,25 @@
 Измените `engine` и **приведите время выполнения и запрос на изменения из профайлера в ответе**:
 - на `MyISAM`
 - на `InnoDB`
+
+```
+mysql> SELECT `ENGINE` FROM `information_schema`.`TABLES`
+    ->   WHERE `TABLE_SCHEMA`='qwe' AND `TABLE_NAME`='orders';
++--------+
+| ENGINE |
++--------+
+| InnoDB |
++--------+
+1 row in set (0.00 sec)
+
+mysql> SHOW PROFILES;
++----------+------------+-----------------------------------------------------------------------------------------------------------+
+| Query_ID | Duration   | Query                                                                                                     |
++----------+------------+-----------------------------------------------------------------------------------------------------------+
+|        8 | 0.36007875 | ALTER TABLE orders ENGINE = InnoDB                                                                        |
+|        9 | 0.25743525 | ALTER TABLE orders ENGINE = MyISAM                                                                        |
++----------+------------+-----------------------------------------------------------------------------------------------------------+
+```
 
 4. Изучите файл `my.cnf` в директории /etc/mysql.
 
@@ -50,3 +93,16 @@
 - Размер файла логов операций 100 Мб
 
 Приведите в ответе измененный файл `my.cnf`.
+
+```
+[mysql]
+default_storage_engine			= InnoDB
+innodb_buffer_pool_size 		= 1500M
+innodb_log_file_size			= 100M
+innodb_log_buffer_size			= 1M
+innodb_file_per_table			= 1
+innodb_flush_log_at_trx_commit  	= 2
+
+innodb_flush_method			= O_DIRECT
+query_cache_size 			= 0
+```
