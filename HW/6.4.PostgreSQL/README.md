@@ -76,11 +76,11 @@ COMMIT;
 Как бы вы доработали бэкап-файл, чтобы добавить уникальность значения столбца `title` для таблиц `test_database`?
 
 ```
-root@673ba49568de:/# pg_dump -h 192.168.1.121 -U postgres > backup_data/dump.sql
+root@673ba49568de:/# pg_dump -h 192.168.1.121 -U postgres test_database > backup_data/dump.sql
 Password:
 root@673ba49568de:/# ls -l /backup_data/
 total 16
--rw-r--r-- 1 root root  541 May 27 22:03 dump.sql
+-rw-r--r-- 1 root root 3499 May 27 22:03 dump.sql
 -rw-r--r-- 1 1000 1000 4539 May 27 17:09 test_db.dump
 -rw-rw-r-- 1 1000 1000 2082 May 27 18:01 test_dump.sql
 
