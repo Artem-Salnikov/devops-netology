@@ -74,7 +74,7 @@ https://hub.docker.com/repository/docker/artemsalnikov/netology-elasticsearch_8.
 | ind-2 | 1 | 2 |
 | ind-3 | 2 | 4 |
 
-```json
+```json lines
 curl -X PUT "localhost:9200/ind-1?pretty" -H 'Content-Type: application/json' -d'
 {
   "settings": {
