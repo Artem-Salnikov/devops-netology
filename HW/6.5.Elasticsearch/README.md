@@ -74,7 +74,7 @@ https://hub.docker.com/repository/docker/artemsalnikov/netology-elasticsearch_8.
 | ind-2 | 1 | 2 |
 | ind-3 | 2 | 4 |
 
-```json lines
+```
 curl -X PUT "localhost:9200/ind-1?pretty" -H 'Content-Type: application/json' -d'
 {
   "settings": {
@@ -102,7 +102,7 @@ curl -X PUT "localhost:9200/ind-3?pretty" -H 'Content-Type: application/json' -d
 
 Получите список индексов и их статусов, используя API и **приведите в ответе** на задание.
 
-```json
+```
 $ curl -X GET 'localhost:9200/_cat/indices?v'
 health status index uuid                   pri rep docs.count docs.deleted store.size pri.store.size
 green  open   ind-1 zyHTYBYQQ2C6xrOAY2jviQ   1   0          0            0       225b           225b
@@ -113,7 +113,7 @@ yellow open   ind-3 7tffCgg3QFGfJRcvnDa3cg   4   2          0            0      
 
 Получите состояние кластера `elasticsearch`, используя API.
 
-```json
+```
 $ curl -X GET localhost:9200/_cluster/health/?pretty=true
 {
   "cluster_name" : "docker-cluster",
@@ -141,7 +141,7 @@ $ curl -X GET localhost:9200/_cluster/health/?pretty=true
 ```
 Удалите все индексы.
 
-```json
+```
 $ curl -X DELETE "localhost:9200/ind-1?pretty"
 {
   "acknowledged" : true
@@ -181,7 +181,7 @@ elasticsearch@1872cdc46ad0:~/snapshots$ pwd
 
 **Приведите в ответе** запрос API и результат вызова API для создания репозитория.
 
-```json
+```
 $ curl -X PUT "localhost:9200/_snapshot/netology_backup?pretty" -H 'Content-Type: application/json' -d'
 {
   "type": "fs",
@@ -205,7 +205,7 @@ $ curl -X GET 'http://localhost:9200/_snapshot/netology_backup?pretty'
 
 Создайте индекс `test` с 0 реплик и 1 шардом и **приведите в ответе** список индексов.
 
-```json
+```
 artem@Main:~/elastic$ curl -X PUT "localhost:9200/test?pretty" -H 'Content-Type: application/json' -d'
  {
     "number_of_shards":> {
@@ -231,7 +231,7 @@ green  open   test  ma7OAA-CR0e6WgtVnUN4tA   1   0          0            0      
 
 **Приведите в ответе** список файлов в директории со `snapshot`ами.
 
-```json
+```
 $ curl -X PUT "localhost:9200/_snapshot/netology_backup/%3Cmy_snapshot_%7Bnow%2Fd%7D%3E?pretty"
 {
   "accepted" : true
@@ -250,7 +250,7 @@ drwxrwxr-x 4 elasticsearch root  4096 May 29 16:54 indices/
 
 Удалите индекс `test` и создайте индекс `test-2`. **Приведите в ответе** список индексов.
 
-```json
+```
 $ curl -X DELETE "localhost:9200/test?pretty"
 {
   "acknowledged" : true
@@ -280,7 +280,7 @@ green  open   test-2 TxNpC2UFTJC2P7hhnba89w   1   0          0            0     
 
 **Приведите в ответе** запрос к API восстановления и итоговый список индексов.
 
-```json
+```
 curl -X POST "localhost:9200/_snapshot/netology_backup/my_snapshot_2022.05.29/_restore?pretty"
 {
   "accepted" : true
