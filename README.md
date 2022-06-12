@@ -2432,5 +2432,7 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "6.6. Troubleshooting"**](/HW/6.6.Troubleshooting/README.md)
 
+[**Домашнее задание к занятию "7.1. Инфраструктура как код"**](/HW/7.1.IaC/README.md)
+
 
 
