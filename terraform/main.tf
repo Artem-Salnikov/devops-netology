@@ -4,7 +4,18 @@ terraform {
       source = "yandex-cloud/yandex"
     }
   }
-  required_version = ">= 0.13"
+  
+  backend "s3" {
+    endpoint   = "storage.yandexcloud.net"
+    bucket     = "terraform-storage-asalnikov"
+    region     = "ru-central1"
+    key        = ".terraform/terraform.tfstate"
+    access_key = "YCAJEHCgTm4rMuib1o8pOHdYg"
+    secret_key = "YCPF2fjOjudFiHv6VZdt61H8qhmlDn4rglzNmF16"
+
+    skip_region_validation      = true
+    skip_credentials_validation = true
+  }
 }
 
 provider "yandex" {
