@@ -2436,5 +2436,5 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "7.2. Облачные провайдеры и синтаксис Terraform"**](/HW/7.2.Terraform_syntax/README.md)
 
-[**Домашнее задание к занятию "7.2. Основы и принцип работы Терраформ"**](/HW/7.3.Terraform_basic/README.md)
+[**Домашнее задание к занятию "7.3. Основы и принцип работы Терраформ"**](/HW/7.3.Terraform_basic/README.md)
 
