@@ -35,10 +35,12 @@ dynamodb.
 ![Netdata](/HW/7.3.Terraform_basic/3.png)
 
 * Вывод команды `terraform plan` для воркспейса `prod`.  
-[**main.tf**](/HW/7.3.Terraform_basic/main.tf)
-Вывод terraform plan
+[**main.tf**](/HW/7.3.Terraform_basic/main.tf)  
+Вывод terraform plan  
 
 <details><summary></summary>
+
+```
 artem@Main:~/git/devops-netology/terraform$ terraform plan
 
 Terraform used the selected providers to generate the following execution plan. Resource actions are indicated with the
@@ -424,6 +426,8 @@ Changes to Outputs:
       + (known after apply),
       + (known after apply),
     ]
+```
+    
 </details>
 
 ---
