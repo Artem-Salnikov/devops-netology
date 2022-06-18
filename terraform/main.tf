@@ -10,8 +10,8 @@ terraform {
     bucket     = "terraform-storage-asalnikov"
     region     = "ru-central1"
     key        = ".terraform/terraform.tfstate"
-    access_key = "YCAJEHCgTm4rMuib1o8pOHdYg"
-    secret_key = "YCPF2fjOjudFiHv6VZdt61H8qhmlDn4rglzNmF16"
+    access_key = ""
+    secret_key = ""
 
     skip_region_validation      = true
     skip_credentials_validation = true
@@ -32,11 +32,6 @@ resource "yandex_compute_instance" "Node" {
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
-<<<<<<< HEAD
-=======
-    size = local.disk_size[terraform.workspace]
-    count = 1
->>>>>>> b197cbcc4e2927796e8d2274df4b4d36c2c664ce
   }
 
   boot_disk {
@@ -64,11 +59,6 @@ resource "yandex_compute_instance" "ForEach" {
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
-<<<<<<< HEAD
-=======
-    size = local.disk_size[terraform.workspace]
-    count = 2
->>>>>>> b197cbcc4e2927796e8d2274df4b4d36c2c664ce
   }
 
   boot_disk {
