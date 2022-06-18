@@ -31,8 +31,8 @@ resource "yandex_compute_instance" "vm-1" {
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
-    disk_size = local.disk_size[terraform.workspace]
-    instance_count = 1
+    size = local.disk_size[terraform.workspace]
+    count = 1
   }
 
   boot_disk {
@@ -57,8 +57,8 @@ resource "yandex_compute_instance" "vm-2" {
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
-    disk_size = local.disk_size[terraform.workspace]
-    instance_count = 2
+    size = local.disk_size[terraform.workspace]
+    count = 2
   }
 
   boot_disk {
