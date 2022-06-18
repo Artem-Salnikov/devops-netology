@@ -25,19 +25,25 @@ provider "yandex" {
   zone                     = var.yc_region
 }
 
-resource "yandex_compute_instance" "vm-1" {
-  name = "terraform1"
+resource "yandex_compute_instance" "Node" {
+  name = "Node-${format(var.count_format, var.count_offset+count.index+1)}"
+  count = 2
 
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
+<<<<<<< HEAD
+=======
     size = local.disk_size[terraform.workspace]
     count = 1
+>>>>>>> b197cbcc4e2927796e8d2274df4b4d36c2c664ce
   }
 
   boot_disk {
     initialize_params {
       image_id = "fd8huthm018j2kafdk4p"
+      type = local.disk_type[terraform.workspace]
+      size = local.disk_size[terraform.workspace]
     }
   }
 
@@ -51,19 +57,25 @@ resource "yandex_compute_instance" "vm-1" {
   }
 }
 
-resource "yandex_compute_instance" "vm-2" {
-  name = "terraform2"
+resource "yandex_compute_instance" "ForEach" {
+  for_each   = toset(local.instances_name[terraform.workspace])
+  name = "Node_foreach-${each.key}"
 
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
+<<<<<<< HEAD
+=======
     size = local.disk_size[terraform.workspace]
     count = 2
+>>>>>>> b197cbcc4e2927796e8d2274df4b4d36c2c664ce
   }
 
   boot_disk {
     initialize_params {
       image_id = "fd8huthm018j2kafdk4p"
+      type = local.disk_type[terraform.workspace]
+      size = local.disk_size[terraform.workspace]
     }
   }
 
@@ -105,3 +117,12 @@ resource "yandex_vpc_subnet" "subnet-1" {
     stage = 2
     prod = 4
   }
+  disk_type = {
+    stage = "network-hdd"
+    prod = "network-ssd"
+  }
+  instances_name = {
+    stage = ["1", "2"]
+    prod = ["1", "2", "3"]
+  }
+  } 
