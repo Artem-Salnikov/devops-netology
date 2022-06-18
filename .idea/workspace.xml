@@ -4,8 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 07-terraform-02">
-      <change beforePath="$PROJECT_DIR$/HW/7.2.Terraform_syntax/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW/7.2.Terraform_syntax/README.md" afterDir="false" />
+    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 7.2">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -456,7 +456,14 @@
       <option name="project" value="LOCAL" />
       <updated>1654445884637</updated>
     </task>
-    <option name="localTasksCounter" value="43" />
+    <task id="LOCAL-00043" summary="HW 7.2">
+      <created>1655465715737</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1655465715737</updated>
+    </task>
+    <option name="localTasksCounter" value="44" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -505,6 +512,7 @@
     <MESSAGE value="HW 06-db-04-postgresql" />
     <MESSAGE value="HW 06-db-05-elasticsearch" />
     <MESSAGE value="HW 06-db-06-troobleshooting" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW 06-db-06-troobleshooting" />
+    <MESSAGE value="HW 7.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW 7.2" />
   </component>
 </project>

@@ -4,7 +4,7 @@ terraform {
       source = "yandex-cloud/yandex"
     }
   }
-  
+
   backend "s3" {
     endpoint   = "storage.yandexcloud.net"
     bucket     = "terraform-storage-asalnikov"
@@ -29,8 +29,10 @@ resource "yandex_compute_instance" "vm-1" {
   name = "terraform1"
 
   resources {
-    cores  = 2
-    memory = 2
+    cores  = local.cores[terraform.workspace]
+    memory = local.memory[terraform.workspace]
+    disk_size = local.disk_size[terraform.workspace]
+    instance_count = 1
   }
 
   boot_disk {
@@ -53,8 +55,10 @@ resource "yandex_compute_instance" "vm-2" {
   name = "terraform2"
 
   resources {
-    cores  = 4
-    memory = 4
+    cores  = local.cores[terraform.workspace]
+    memory = local.memory[terraform.workspace]
+    disk_size = local.disk_size[terraform.workspace]
+    instance_count = 2
   }
 
   boot_disk {
@@ -83,3 +87,21 @@ resource "yandex_vpc_subnet" "subnet-1" {
   network_id     = yandex_vpc_network.network-1.id
   v4_cidr_blocks = ["192.168.10.0/24"]
 }
+
+  locals {
+  cores = {
+    stage = 2
+    prod = 4
+  }
+  disk_size = {
+    stage = 20
+    prod = 40
+  }
+  instance_count = {
+    stage = 1
+    prod = 2
+  }
+  memory = {
+    stage = 2
+    prod = 4
+  }
