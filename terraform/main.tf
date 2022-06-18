@@ -32,6 +32,11 @@ resource "yandex_compute_instance" "Node" {
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
+<<<<<<< HEAD
+=======
+    size = local.disk_size[terraform.workspace]
+    count = 1
+>>>>>>> b197cbcc4e2927796e8d2274df4b4d36c2c664ce
   }
 
   boot_disk {
@@ -59,6 +64,11 @@ resource "yandex_compute_instance" "ForEach" {
   resources {
     cores  = local.cores[terraform.workspace]
     memory = local.memory[terraform.workspace]
+<<<<<<< HEAD
+=======
+    size = local.disk_size[terraform.workspace]
+    count = 2
+>>>>>>> b197cbcc4e2927796e8d2274df4b4d36c2c664ce
   }
 
   boot_disk {
