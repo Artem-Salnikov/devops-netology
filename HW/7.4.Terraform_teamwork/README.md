@@ -36,7 +36,7 @@
 
 В качестве результата приложите ссылку на файлы `server.yaml` и `atlantis.yaml`.
 
-[server.yaml](/HW/7.4.Terraform_teamwork/server.yaml)
+[server.yaml](/HW/7.4.Terraform_teamwork/server.yaml)  
 [atlantis.yaml](/HW/7.4.Terraform_teamwork/atlantis.yaml)
 
 ## Задача 3. Знакомство с каталогом модулей. 
