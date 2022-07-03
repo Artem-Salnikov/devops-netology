@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 7.3">
-      <change beforePath="$PROJECT_DIR$/HW/7.4.Terraform_teamwork/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW/7.4.Terraform_teamwork/README.md" afterDir="false" />
+    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 7.4">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,7 +42,7 @@
     <property name="TF_FMT" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/branching/merge.sh" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
   </component>
   <component name="RunManager" selected="Python.Hello">
     <configuration name="04-script-02-py-2" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
@@ -484,7 +485,14 @@
       <option name="project" value="LOCAL" />
       <updated>1655590304174</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="HW 7.4">
+      <created>1656263569424</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1656263569424</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -509,7 +517,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Изменения через pycharm №2" />
     <MESSAGE value="HW 3.2" />
     <MESSAGE value="HW 3.3" />
     <MESSAGE value="HW 3.4" />
@@ -534,6 +541,7 @@
     <MESSAGE value="HW 06-db-06-troobleshooting" />
     <MESSAGE value="HW 7.2" />
     <MESSAGE value="HW 7.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW 7.3" />
+    <MESSAGE value="HW 7.4" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW 7.4" />
   </component>
 </project>

@@ -2440,3 +2440,5 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "7.4. Средства командной работы над инфраструктурой"**](/HW/7.4.Terraform_teamwork/README.md)
 
+[**Домашнее задание к занятию "7.5. Основы golang"**](/HW/7.5.Golang/README.md)
+
