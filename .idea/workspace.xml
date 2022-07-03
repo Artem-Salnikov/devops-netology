@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 7.4">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 7.5">
+      <change beforePath="$PROJECT_DIR$/HW/7.5.Golang/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW/7.5.Golang/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -492,7 +491,21 @@
       <option name="project" value="LOCAL" />
       <updated>1656263569424</updated>
     </task>
-    <option name="localTasksCounter" value="48" />
+    <task id="LOCAL-00048" summary="HW 7.5">
+      <created>1656857812096</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1656857812096</updated>
+    </task>
+    <task id="LOCAL-00049" summary="HW 7.5">
+      <created>1656857846323</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1656857846323</updated>
+    </task>
+    <option name="localTasksCounter" value="50" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -517,7 +530,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="HW 3.2" />
     <MESSAGE value="HW 3.3" />
     <MESSAGE value="HW 3.4" />
     <MESSAGE value="HW 3.5 + expandable content" />
@@ -542,6 +554,7 @@
     <MESSAGE value="HW 7.2" />
     <MESSAGE value="HW 7.3" />
     <MESSAGE value="HW 7.4" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW 7.4" />
+    <MESSAGE value="HW 7.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW 7.5" />
   </component>
 </project>
