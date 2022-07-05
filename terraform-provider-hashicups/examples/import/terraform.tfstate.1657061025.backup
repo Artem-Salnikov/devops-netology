@@ -1,0 +1,27 @@
+{
+  "version": 4,
+  "terraform_version": "1.2.2",
+  "serial": 1,
+  "lineage": "8f5f4b05-60e6-1965-8461-7319cb6dc5ed",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "hashicups_order",
+      "name": "sample",
+      "provider": "provider[\"hashicorp.com/edu/hashicups\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "6",
+            "items": [],
+            "last_updated": null
+          },
+          "sensitive_attributes": [],
+          "private": "eyJzY2hlbWFfdmVyc2lvbiI6IjAifQ=="
+        }
+      ]
+    }
+  ]
+}
