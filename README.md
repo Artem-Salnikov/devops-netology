@@ -2442,3 +2442,6 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "7.5. Основы golang"**](/HW/7.5.Golang/README.md)
 
+[**Домашнее задание к занятию "7.6. Написание собственных провайдеров для Terraform"**](/HW/7.6.Terraform_providers/README.md)
+
+

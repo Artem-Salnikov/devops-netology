@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 7.5">
-      <change beforePath="$PROJECT_DIR$/HW/7.5.Golang/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW/7.5.Golang/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -161,13 +162,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638712052378</updated>
-    </task>
-    <task id="LOCAL-00001" summary="Изменения через pycharm">
-      <created>1638713124488</created>
-      <option name="number" value="00001" />
-      <option name="presentableId" value="LOCAL-00001" />
-      <option name="project" value="LOCAL" />
-      <updated>1638713124488</updated>
     </task>
     <task id="LOCAL-00002" summary="Изменения через pycharm №2">
       <created>1638713770223</created>
@@ -505,7 +499,14 @@
       <option name="project" value="LOCAL" />
       <updated>1656857846323</updated>
     </task>
-    <option name="localTasksCounter" value="50" />
+    <task id="LOCAL-00050" summary="HW 7.5">
+      <created>1656858173193</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1656858173194</updated>
+    </task>
+    <option name="localTasksCounter" value="51" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
