@@ -2444,6 +2444,6 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "7.6. Написание собственных провайдеров для Terraform"**](/HW/7.6.Terraform_providers/README.md)
 
-[**Домашнее задание к занятию "08.01 Введение в Ansible""**](https://github.com/Artem-Salnikov/8.1.Ansible_base)
+[**Домашнее задание к занятию "8.1. Введение в Ansible""**](https://github.com/Artem-Salnikov/8.1.Ansible_base)
 
 
