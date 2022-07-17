@@ -257,7 +257,7 @@ clickhouse-01              : ok=13   changed=0    unreachable=0    failed=0    s
 </details>
 9. Подготовьте README.md файл по своему playbook. В нём должно быть описано: что делает playbook, какие у него есть параметры и теги.  
 
-[README.md](https://github.com/Artem-Salnikov/8.2.Ansible_playbook/README.md)
+[README.md](https://github.com/Artem-Salnikov/8.2.Ansible_playbook/blob/main/README.md)
 
 10. Готовый playbook выложите в свой репозиторий, поставьте тег `08-ansible-02-playbook` на фиксирующий коммит, в ответ предоставьте ссылку на него.
 
