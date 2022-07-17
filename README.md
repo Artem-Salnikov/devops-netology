@@ -2446,6 +2446,6 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "8.1. Введение в Ansible"**](https://github.com/Artem-Salnikov/8.1.Ansible_base)
 
-[**Домашнее задание к занятию "8.2. Работа с Playbook"**](https://github.com/Artem-Salnikov/8.2.Ansible_playbook)
+[**Домашнее задание к занятию "8.2. Работа с Playbook"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/8.2.Ansible_playbook)
 
 
