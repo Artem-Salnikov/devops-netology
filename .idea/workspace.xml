@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 8.1">
+    <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 8.2">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW/8.2.Ansible_playbook/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW/8.2.Ansible_playbook/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -163,27 +162,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638712052378</updated>
-    </task>
-    <task id="LOCAL-00004" summary="HW 3.3">
-      <created>1642629896532</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1642629896532</updated>
-    </task>
-    <task id="LOCAL-00005" summary="HW 3.3">
-      <created>1642665454388</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1642665454388</updated>
-    </task>
-    <task id="LOCAL-00006" summary="HW 3.4">
-      <created>1642975025591</created>
-      <option name="number" value="00006" />
-      <option name="presentableId" value="LOCAL-00006" />
-      <option name="project" value="LOCAL" />
-      <updated>1642975025591</updated>
     </task>
     <task id="LOCAL-00007" summary="HW 3.4">
       <created>1642975135600</created>
@@ -507,7 +485,28 @@
       <option name="project" value="LOCAL" />
       <updated>1657549010295</updated>
     </task>
-    <option name="localTasksCounter" value="53" />
+    <task id="LOCAL-00053" summary="HW 8.2">
+      <created>1658085275744</created>
+      <option name="number" value="00053" />
+      <option name="presentableId" value="LOCAL-00053" />
+      <option name="project" value="LOCAL" />
+      <updated>1658085275744</updated>
+    </task>
+    <task id="LOCAL-00054" summary="HW 8.2">
+      <created>1658085344088</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1658085344088</updated>
+    </task>
+    <task id="LOCAL-00055" summary="HW 8.2">
+      <created>1658085396287</created>
+      <option name="number" value="00055" />
+      <option name="presentableId" value="LOCAL-00055" />
+      <option name="project" value="LOCAL" />
+      <updated>1658085396287</updated>
+    </task>
+    <option name="localTasksCounter" value="56" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -532,7 +531,6 @@
     <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="HW 3.5 + expandable content" />
     <MESSAGE value="HW 3.6.1" />
     <MESSAGE value="HW 3.6.2" />
     <MESSAGE value="HW 3.7 rework" />
@@ -557,6 +555,7 @@
     <MESSAGE value="HW 7.5" />
     <MESSAGE value="HW 7.6" />
     <MESSAGE value="HW 8.1" />
-    <option name="LAST_COMMIT_MESSAGE" value="HW 8.1" />
+    <MESSAGE value="HW 8.2" />
+    <option name="LAST_COMMIT_MESSAGE" value="HW 8.2" />
   </component>
 </project>
