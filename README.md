@@ -2450,4 +2450,6 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "8.3. Использование Yandex Cloud"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/8.3.Yandex_cloud)
 
+[**Домашнее задание к занятию "9.3. CI\CD"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/9.3.CICD)
+
 

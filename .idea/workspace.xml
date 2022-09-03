@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="5f142fb1-017e-4ccb-a1bf-2849b66a3c27" name="Changes" comment="HW 8.3">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/HW/8.3.Yandex_cloud/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/HW/8.3.Yandex_cloud/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -162,13 +161,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1638712052378</updated>
-    </task>
-    <task id="LOCAL-00009" summary="HW 3.4">
-      <created>1643549011086</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1643549011086</updated>
     </task>
     <task id="LOCAL-00010" summary="HW 3.4">
       <created>1643549074440</created>
@@ -506,7 +498,14 @@
       <option name="project" value="LOCAL" />
       <updated>1658752915465</updated>
     </task>
-    <option name="localTasksCounter" value="58" />
+    <task id="LOCAL-00058" summary="HW 8.3">
+      <created>1658755432956</created>
+      <option name="number" value="00058" />
+      <option name="presentableId" value="LOCAL-00058" />
+      <option name="project" value="LOCAL" />
+      <updated>1658755432957</updated>
+    </task>
+    <option name="localTasksCounter" value="59" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
