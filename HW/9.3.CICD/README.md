@@ -25,6 +25,8 @@
 8. Запускаем анализатор повторно - проверяем, что QG пройдены успешно
 9. Делаем скриншот успешного прохождения анализа, прикладываем к решению ДЗ
 
+![Netdata](/HW/9.3.CICD/sonar.png)
+
 ## Знакомство с Nexus
 
 ### Основная часть
@@ -38,6 +40,8 @@
 2. В него же загружаем такой же артефакт, но с version: 8_102
 3. Проверяем, что все файлы загрузились успешно
 4. В ответе присылаем файл `maven-metadata.xml` для этого артефекта
+
+[**maven-metadata.xml**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/9.3.CICD/maven-metadata.xml)
 
 ### Знакомство с Maven
 
@@ -55,3 +59,5 @@
 2. Запускаем команду `mvn package` в директории с `pom.xml`, ожидаем успешного окончания
 3. Проверяем директорию `~/.m2/repository/`, находим наш артефакт
 4. В ответе присылаем исправленный файл `pom.xml`
+
+[**pom.xml**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/9.3.CICD/pom.xml)
