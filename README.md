@@ -2452,4 +2452,6 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "9.3. CI\CD"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/9.3.CICD)
 
+[**Домашнее задание к занятию "10.1. Мониторинг"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/10.1.Monitoring_base)
+
 
