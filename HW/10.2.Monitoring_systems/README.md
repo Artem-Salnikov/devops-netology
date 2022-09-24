@@ -57,19 +57,19 @@
 
     - curl http://localhost:8086/ping
   
-![Netdata](/HW/10.2.Monitoring_systems\curl_8086.png)
+![Netdata](/HW/10.2.Monitoring_systems/curl_8086.png)
 
     - curl http://localhost:8888
 
-![Netdata](/HW/10.2.Monitoring_systems\curl_8088.png)
+![Netdata](/HW/10.2.Monitoring_systems/curl_8088.png)
 
     - curl http://localhost:9092/kapacitor/v1/ping
 
-![Netdata](/HW/10.2.Monitoring_systems\curl_9092.png)
+![Netdata](/HW/10.2.Monitoring_systems/curl_9092.png)
 
 А также скриншот веб-интерфейса ПО chronograf (`http://localhost:8888`). 
 
-![Netdata](/HW/10.2.Monitoring_systems\web_8888.png)
+![Netdata](/HW/10.2.Monitoring_systems/web_8888.png)
 
 P.S.: если при запуске некоторые контейнеры будут падать с ошибкой - проставьте им режим `Z`, например
 `./data:/var/lib:Z`
@@ -86,7 +86,7 @@ P.S.: если при запуске некоторые контейнеры б�
 Для выполнения задания приведите скриншот с отображением метрик утилизации места на диске 
 (disk->host->telegraf_container_id) из веб-интерфейса.
 
-![Netdata](/HW/10.2.Monitoring_systems\Chronograf_disk.png)
+![Netdata](/HW/10.2.Monitoring_systems/Chronograf_disk.png)
 
 5. Изучите список [telegraf inputs](https://github.com/influxdata/telegraf/tree/master/plugins/inputs). 
 Добавьте в конфигурацию telegraf следующий плагин - [docker](https://github.com/influxdata/telegraf/tree/master/plugins/inputs/docker):
@@ -115,7 +115,7 @@ P.S.: если при запуске некоторые контейнеры б�
 После настройке перезапустите telegraf, обновите веб интерфейс и приведите скриншотом список `measurments` в 
 веб-интерфейсе базы telegraf.autogen . Там должны появиться метрики, связанные с docker.
 
-![Netdata](/HW/10.2.Monitoring_systems\docker_metrics.png)
+![Netdata](/HW/10.2.Monitoring_systems/docker_metrics.png)
 
 Факультативно можете изучить какие метрики собирает telegraf после выполнения данного задания.
 
@@ -131,4 +131,4 @@ P.S.: если при запуске некоторые контейнеры б�
     - ...
     - фантазируйте)
     
-![Netdata](/HW/10.2.Monitoring_systems\dashboards.png)
+![Netdata](/HW/10.2.Monitoring_systems/dashboards.png)
