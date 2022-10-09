@@ -2460,4 +2460,4 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "10.4. Система сбора логов ELK"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/10.4.ELK)
 
-[**Домашнее задание к занятию "10.05. Sentry"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/10.5.Sentry)
+[**Домашнее задание к занятию "11.1. Введение в микросервисы"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/11.1.Microservices_intro)
