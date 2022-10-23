@@ -2468,3 +2468,5 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 
 [**Домашнее задание к занятию "11.4. Микросервисы: масштабирование"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/11.4.Microservices_scaling)
 
+[**Домашнее задание к занятию "12.1. Компоненты Kubernetes"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/12.1.Kubernetes_intro)
+
