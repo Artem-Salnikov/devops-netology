@@ -2475,3 +2475,5 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 [**Домашнее задание к занятию "12.3. Развертывание кластера на собственных серверах, лекция 1"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/12.3.Kubernetes_install_part_1)
 
 [**Домашнее задание к занятию "12.4 Развертывание кластера на собственных серверах, лекция 2"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/12.4.Kubernetes_install_part_2)
+
+[**Домашнее задание к занятию "12.5 Сетевые решения CNI"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/12.5.Kubernetes_cni)
