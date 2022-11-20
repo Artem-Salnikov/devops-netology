@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: main
+  name: main
+  namespace: stage
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: main
+  template:
+    metadata:
+      labels:
+        app: main
+    spec:
+      containers:
+        - image: artemsalnikov/13-kubernetes-config-frontend
+          name: frontend
+          volumeMounts:
+            - mountPath: "/static"
+              name: volume
+          imagePullPolicy: IfNotPresent
+        - image: artemsalnikov/13-kubernetes-config-backend
+          name: backend
+          volumeMounts:
+            - mountPath: "/static"
+              name: volume
+          imagePullPolicy: IfNotPresent
+      volumes:
+        - name: volume
+          emptyDir: {}
