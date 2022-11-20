@@ -7,7 +7,7 @@
 * регулируется с помощью deployment фронтенд и бекенд;
 * база данных — через statefulset.
 
-Выполнил docker compose buld предоствленных приложений, залил на docker hub.
+Выполнил docker compose build предоствленных приложений, залил на docker hub.
 Создал namespace: stage, prod.
 
 Deploiment для пода с двумя контейнерами frontend, backend.
