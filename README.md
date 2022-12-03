@@ -2481,3 +2481,5 @@ psql -h 192.168.1.121 -U postgres -W test_db < /backup_data/test_db.dump
 [**Домашнее задание к занятию "13.1 Контейнеры, поды, deployment, statefulset, services, endpoints"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/13.1.Kubernetes_config_objects)
 
 [**Домашнее задание к занятию "13.2 Разделы и монтирование"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/13.2.Kubernetes_config_mounts)
+
+[**Домашнее задание к занятию "13.3 Работа с kubectl"**](https://github.com/Artem-Salnikov/devops-netology/tree/main/HW/13.3.Kubernetes_config_kubectl)
