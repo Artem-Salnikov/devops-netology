@@ -1,0 +1,39 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: db
+  name: db-{{ .Release.Name }}
+spec:
+  selector:
+    matchLabels:
+      app: db
+  serviceName: "db"
+  replicas: {{ .Values.db.replicaCount }}
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: "{{ .Values.db.image.repository }}/{{ .Values.db.image.tag }}"
+          volumeMounts:
+            - mountPath: "/data"
+              name: my-volume
+          ports:
+            - name: postgresqlkub
+              containerPort: {{ .Values.db.port }}
+              protocol: TCP
+          env:
+            - name: POSTGRES_USER
+              value: {{ .Values.db.POSTGRES_USER }}
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.db.POSTGRES_PASSWORD }}
+            - name: POSTGRES_DB
+              value: news
+      volumes:
+        - name: my-volume
+          persistentVolumeClaim:
+            claimName: pvc-{{ .Release.Name }}

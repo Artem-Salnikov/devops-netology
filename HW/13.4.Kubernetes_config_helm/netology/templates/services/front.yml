@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend-{{ .Release.Name }}
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: {{ .Values.front.port }}
+    targetPort: {{ .Values.front.port }}
+    protocol: TCP
+  selector:
+    app: frontend
