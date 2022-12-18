@@ -155,7 +155,7 @@ waiting for readiness of 3 objects
 ✓ 4s: rollout complete
 command took 9.15s
 ```
-Проверка развертывния
+Проверка развертывания
 
 ```
 [artem@salnikov qbec]$ kubectl get po,svc,pv,pvc -n stage 
