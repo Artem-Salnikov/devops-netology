@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontend
+  namespace: prod
+  labels:
+    app: frontend
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
+  selector:
+    app: frontend
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: frontend
+  name: frontend
+  namespace: prod
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: frontend
+  template:
+    metadata:
+      labels:
+        app: frontend
+    spec:
+      containers:
+        - image: artemsalnikov/13-kubernetes-config-frontend
+          name: frontend
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: SECRET_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: username
+                  optional: false
+            - name: SECRET_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: password
+                  optional: false
+          volumeMounts:
+            - name: tls-volume
+              mountPath: "/tls"
+      volumes:
+        - name: tls-volume
+          secret:
+            secretName: domain-cert
