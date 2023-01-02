@@ -151,3 +151,93 @@ netology    Big secret!!!
 * Создать секрет, в котором будет указан токен;
 * Подключить секрет к модулю;
 * Запустить модуль и проверить доступность сервиса Vault.
+
+На основе образа fedora создал docker образ и загрузил на dockerhub.
+```
+FROM fedora:latest
+
+RUN mkdir /hvac && yum -y install pip && pip install hvac
+WORKDIR /hvac
+ADD hv.py /hvac
+```
+
+Внутрь образа вложил python файл, код берет токен из переменных окружения и выводит секрет из vault.
+```py
+import hvac
+import os
+
+env_token = os.environ['TOKEN_VAULT'].strip("\n")
+client = hvac.Client(
+    url='http://10.233.75.11:8200',
+    token=env_token
+)
+client.is_authenticated()
+
+
+secret = client.secrets.kv.v2.read_secret_version(
+    path='hvac',
+)
+print ( "Secret = " + secret['data']['data']['netology'])
+```
+
+Создал секрет, который содержит токен для vault.
+```yml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: env-secret
+type: Opaque
+data:
+  token: YWlwaG9oVGFhMGVlSGVpCg==
+```
+
+Создал модуль на основе своего образа fedora и подключил секрет, секрет записывается в переменную $TOKEN_VAULT.
+```yml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fedora-14-2
+  name: fedora-14-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fedora-14-2
+  template:
+    metadata:
+      labels:
+        app: fedora-14-2
+    spec:
+      containers:
+        - image: artemsalnikov/fedora:v1
+          name: fedora-14-2
+          command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TOKEN_VAULT
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: token
+                  optional: false
+```
+
+Проверка работы:
+```
+[artem@salnikov 14.2]$ kubectl get po
+NAME                           READY   STATUS    RESTARTS        AGE
+14.2-netology-vault            1/1     Running   1 (4h28m ago)   6h50m
+fedora-14-2-549bd676b4-l2cmx   1/1     Running   0               72m
+[artem@salnikov 14.2]$ kubectl get secrets 
+NAME          TYPE                DATA   AGE
+env-secret    Opaque              1      4h15m
+
+[root@fedora-14-2-549bd676b4-l2cmx hvac]# ll
+total 4
+-rw-r--r-- 1 root root 308 Jan  2 17:20 hv.py
+[root@fedora-14-2-549bd676b4-l2cmx hvac]# echo $TOKEN_VAULT
+aiphohTaa0eeHei
+[root@fedora-14-2-549bd676b4-l2cmx hvac]# python3 hv.py 
+Secret = Big secret!!!
+```
