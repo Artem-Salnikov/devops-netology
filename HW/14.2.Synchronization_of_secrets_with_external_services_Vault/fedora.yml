@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: fedora-14-2
+  name: fedora-14-2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: fedora-14-2
+  template:
+    metadata:
+      labels:
+        app: fedora-14-2
+    spec:
+      containers:
+        - image: artemsalnikov/fedora:v1
+          name: fedora-14-2
+          command: [ "/bin/bash", "-ce", "tail -f /dev/null" ]
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: TOKEN_VAULT
+              valueFrom:
+                secretKeyRef:
+                  name: env-secret
+                  key: token
+                  optional: false
