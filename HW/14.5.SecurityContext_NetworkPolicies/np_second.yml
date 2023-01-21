@@ -1,0 +1,18 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: np-second
+spec:
+  podSelector: 
+    matchLabels:
+      app: second 
+  egress:
+  - to:
+    - podSelector:
+        matchLabels:
+          app: first
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          app: first
