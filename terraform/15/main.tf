@@ -92,3 +92,20 @@ resource "yandex_compute_instance" "vm_private" {
     ssh-keys = "ubuntu:${file("~/.ssh/id_rsa.pub")}"
   }
 }
+
+output "internal_ip_address_vm_public" {
+  value = yandex_compute_instance.vm_public.network_interface.0.ip_address
+}
+
+output "internal_ip_address_vm_private" {
+  value = yandex_compute_instance.vm_private.network_interface.0.ip_address
+}
+
+
+output "external_ip_address_vm_public" {
+  value = yandex_compute_instance.vm_public.network_interface.0.nat_ip_address
+}
+
+output "external_ip_address_vm_private" {
+  value = yandex_compute_instance.vm_private.network_interface.0.nat_ip_address
+}
