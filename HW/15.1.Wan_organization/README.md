@@ -40,8 +40,6 @@ external_ip_address_vm_private = ""
 external_ip_address_vm_public = "130.193.49.24"
 internal_ip_address_vm_private = "192.168.20.31"
 internal_ip_address_vm_public = "192.168.10.254"
-
-[artem@Salnikov ~]$ ssh ubuntu@130.193.49.24
 ```
 Скопировал ключ на NAT-инстанс.
 ```
