@@ -25,13 +25,86 @@ Resource terraform для ЯО
 - [Compute Instance](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_instance)
 ---
 
-Код Terraform
+[**Код Terraform**](https://github.com/Artem-Salnikov/devops-netology/tree/main/terraform/15)
 
 Для проверки работы необходимо скопировать ключ на NAT-инстанс и с него подключиться к ВМ в приватной сети.
 
-```
+В выводе "terraform apply" получил адреса ВМ.
 
 ```
+Apply complete! Resources: 6 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+external_ip_address_vm_private = ""
+external_ip_address_vm_public = "130.193.49.24"
+internal_ip_address_vm_private = "192.168.20.31"
+internal_ip_address_vm_public = "192.168.10.254"
+
+[artem@Salnikov ~]$ ssh ubuntu@130.193.49.24
+```
+Скопировал ключ на NAT-инстанс.
+```
+[artem@Salnikov ~]$ scp ~/.ssh/id_rsa ubuntu@130.193.49.24:/home/ubuntu/.ssh/id_rsa
+id_rsa                                                                           100% 2602   404.9KB/s   00:00 
+```
+
+Подключился на NAT-инстанс, проверил доступ к сети интернет и поменял права на ключ.
+```
+[artem@Salnikov ~]$ ssh ubuntu@130.193.49.24
+
+ubuntu@fhmv95j05099hrc0q0vj:~$ cd ~/.ssh/
+ubuntu@fhmv95j05099hrc0q0vj:~/.ssh$ ll
+total 20
+drwx------ 2 ubuntu ubuntu 4096 Jan 29 15:49 ./
+drwxr-xr-x 5 ubuntu ubuntu 4096 Jan 29 15:47 ../
+-rw------- 1 ubuntu ubuntu  568 Jan 29 15:45 authorized_keys
+-rw------- 1 ubuntu ubuntu 2602 Jan 29 15:49 id_rsa
+-rw-r--r-- 1 ubuntu ubuntu  222 Jan 29 15:48 known_hosts
+ubuntu@fhmv95j05099hrc0q0vj:~/.ssh$ chmod 600 ~/.ssh/id_rsa
+ubuntu@fhmv95j05099hrc0q0vj:~/.ssh$ ll
+total 20
+drwx------ 2 ubuntu ubuntu 4096 Jan 29 15:49 ./
+drwxr-xr-x 5 ubuntu ubuntu 4096 Jan 29 15:47 ../
+-rw------- 1 ubuntu ubuntu  568 Jan 29 15:45 authorized_keys
+-rw------- 1 ubuntu ubuntu 2602 Jan 29 15:49 id_rsa
+-rw-r--r-- 1 ubuntu ubuntu  222 Jan 29 15:48 known_hosts
+
+ubuntu@fhmv95j05099hrc0q0vj:~/.ssh$ ping yandex.ru
+PING yandex.ru (5.255.255.88) 56(84) bytes of data.
+64 bytes from yandex.ru (5.255.255.88): icmp_seq=1 ttl=59 time=0.837 ms
+64 bytes from yandex.ru (5.255.255.88): icmp_seq=2 ttl=59 time=0.415 ms
+64 bytes from yandex.ru (5.255.255.88): icmp_seq=3 ttl=59 time=0.682 ms
+64 bytes from yandex.ru (5.255.255.88): icmp_seq=4 ttl=59 time=0.415 ms
+^C
+--- yandex.ru ping statistics ---
+4 packets transmitted, 4 received, 0% packet loss, time 3049ms
+rtt min/avg/max/mdev = 0.415/0.587/0.837/0.181 ms
+```
+
+Подключился с NAT-инстанс на ВМ в приватной подсети.
+```
+ubuntu@fhmv95j05099hrc0q0vj:~/.ssh$ ssh ubuntu@192.168.20.31
+
+ubuntu@fhmer6g7grfji6p9ailj:~$ ip a | grep inet
+    inet 127.0.0.1/8 scope host lo
+    inet6 ::1/128 scope host 
+    inet 192.168.20.31/24 metric 100 brd 192.168.20.255 scope global eth0
+    inet6 fe80::d20d:edff:fe9a:786/64 scope link
+
+ubuntu@fhmer6g7grfji6p9ailj:~$ ping 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=59 time=20.8 ms
+64 bytes from 8.8.8.8: icmp_seq=2 ttl=59 time=19.4 ms
+64 bytes from 8.8.8.8: icmp_seq=3 ttl=59 time=19.3 ms
+64 bytes from 8.8.8.8: icmp_seq=4 ttl=59 time=19.4 ms
+64 bytes from 8.8.8.8: icmp_seq=5 ttl=59 time=19.4 ms
+```
+
+Проверил доступ к интернету с ВМ в приватной подсети, проверил, что пакеты идут через NAT-инстанс. Скриншот из утилиты jnettop, которая показывает трафик в реальном времени.
+
+![Netdata](/HW/15.1.Wan_organization/log.png)
+
 
 ## Задание 2*. AWS (необязательное к выполнению)
 
